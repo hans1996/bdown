@@ -10,17 +10,17 @@
 
 [[main]]
   name = "R"
-  url = "#posts"
+  url = "#R"
   weight = 20
 
 [[main]]
   name = "Python"
-  url = "#posts"
+  url = "#python"
   weight = 20
   
 [[main]]
   name = "Reinforcement Learning"
-  url = "#posts"
+  url = "#Reinforcement_learning"
   weight = 20
   
 
@@ -29,7 +29,6 @@
   url = "#projects"
   weight = 30
   
-
 
 
 #[[main]]
