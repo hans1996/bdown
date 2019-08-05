@@ -70,17 +70,17 @@
   </url>
   
   <url>
-    <loc>/r/advanced_r/vector/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
     <loc>/python/advanced_r/vector/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/reinforcement_learning/advanced_r/vector/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/r/advanced_r/functional/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
