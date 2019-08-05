@@ -2,17 +2,17 @@
 authors:
 - admin
 categories: []
-date: "2019-02-05T00:00:00Z"
+date: "2019-08-05T00:00:00Z"
 draft: false
 featured: false
 image:
   caption: ""
   focal_point: ""
 projects: []
-subtitle: Learn how to blog in Academic using Jupyter notebooks
-summary: Learn how to blog in Academic using Jupyter notebooks
+subtitle: 
+summary: 
 tags: []
-title: Display Jupyter Notebooks with Academic
+title: R(1)- basic vector
 ---
 
 ```{r setup, include=FALSE}
