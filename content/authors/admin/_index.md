@@ -14,12 +14,12 @@ education:
   - course: BSc in Artificial Intelligence
     institution: Massachusetts Institute of Technology
     year: 2008
-email: ""
+email: "hans8512185121@gmail.com"
 interests:
 - Artificial Intelligence
 - Computational Linguistics
 - Information Retrieval
-name: Nelson Bighetti
+name: Hans
 organizations:
 - name: Stanford University
   url: ""
