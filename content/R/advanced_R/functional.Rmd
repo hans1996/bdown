@@ -12,8 +12,10 @@ projects: []
 subtitle: 
 summary: 
 tags: []
-title: R-functional
+title: Note-functional
 ---
+
+Content comes from https://adv-r.hadley.nz/
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -70,7 +72,7 @@ map_dbl(mtcars, function(x) length(unique(x)))
 ```{r}
 map_dbl(mtcars, ~ length(unique(.x)))
 ```
-
+以下寫法通常用來產生data:
 ```{r}
 x <- map(1:3, ~runif(2))
 str(x)
@@ -107,14 +109,14 @@ map_chr(x, "z", .default = NA)
 ## Passing arguments with `...`
 It’s often convenient to pass along additional arguments to the function that you’re calling. For example, you might want to pass na.rm = TRUE along to mean(). One way to do that is with an anonymous function:
 ```{r}
-x <- list(1:5, c(1:10, NA))
-map_dbl(x, ~ mean(.x, na.rm = TRUE))
+Y <- list(1:5, c(1:10, NA))
+map_dbl(Y, ~ mean(.x, na.rm = TRUE))
 ```
 But because the map functions pass `...` along, there’s a simpler form available:
 ```{r}
 map_dbl(x, mean, na.rm = TRUE)
 ```
-如下圖:
+map(直觀圖:
 
 <img src="https://d33wubrfki0l68.cloudfront.net/e1b3536a7556aef348f546a79277125c419a5fdc/0c0a1/diagrams/functionals/map-arg.png" width="359" style="display: block; margin: auto;">
 
@@ -192,19 +194,19 @@ intercepts
 ## Map variants
  five new ideas:
 
-+ Output same type as input with modify()
+1. Output same type as input with modify()
 
 
-+ Iterate over two inputs with map2().
+2. Iterate over two inputs with map2().
 
 
-+ Iterate with an index using imap()
+3. Iterate with an index using imap()
 
 
-+ Return nothing with walk().
+4. Return nothing with walk().
 
 
-+ Iterate over any number of inputs with pmap().
+5. Iterate over any number of inputs with pmap().
 
 The map family of functions has orthogonal input and outputs, meaning that we can organise all the family into a matrix, with inputs in the rows and outputs in the columns. Once you’ve mastered the idea in a row, you can combine it with any column; once you’ve mastered the idea in a column, you can combine it with any row. That relationship is summarised in the following table:
 
@@ -250,7 +252,7 @@ The map family of functions has orthogonal input and outputs, meaning that we ca
 </tbody>
 </table>
 
-### Map variants-modify()
+###1. modify()
 
 Imagine you wanted to double every column in a data frame. You might first try using `map()`, but `map()` always returns a list:
 ```{r}
@@ -270,5 +272,137 @@ modify(df, function(x) x * 2)
 ```{r}
 df <- modify(df, ~ .x * 2)
 ```
+
+###2. Two inputs: map2() and friends
+
+*`map()` is vectorised over a single argument, `.x.` This means it only varies `.x` when calling `.f`, and all other arguments are passed along unchanged *, thus making it poorly suited for some problems. For example, how would you find a weighted mean when you have a list of observations and a list of weights? Imagine we have the following data:
+
+```{r}
+xs <- map(1:8, ~ runif(10))
+xs[[1]][[1]] <- NA
+ws <- map(1:8, ~ rpois(10, 5) + 1)
+```
+You can use map_dbl() to compute the unweighted means:
+```{r}
+map_dbl(xs, mean)
+```
+But passing ws as an additional argument doesn’t work because arguments after `.f`are not transformed:
+```{r,error=TRUE}
+map_dbl(xs, weighted.mean, w = ws)
+```
+<img src="https://d33wubrfki0l68.cloudfront.net/a468c847ea8aca9a6131492e1e7431f418259eaf/ce4e0/diagrams/functionals/map-arg-recycle.png" width="345" style="display: block; margin: auto;">
+
+We need a new tool: a `map2()`, which is vectorised over two arguments. This means both `.x` and `.y` are varied in each call to `.f`:
+```{r}
+map2_dbl(xs, ws, weighted.mean)
+```
+<img src="https://d33wubrfki0l68.cloudfront.net/f5cddf51ec9c243a7c13732b0ce46b0868bf8a31/501a8/diagrams/functionals/map2.png" width="368" style="display: block; margin: auto;">
+
+The arguments to `map2()` are slightly different to the arguments to `map()` as two vectors come before the function, rather than one. Additional arguments still go afterwards:
+```{r}
+map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)
+```
+<img src="https://d33wubrfki0l68.cloudfront.net/7a545699ff7069a98329fcfbe6e42b734507eb16/211a5/diagrams/functionals/map2-arg.png" width="453" style="display: block; margin: auto;">
+
+One of the big differences between map2() and the simple function above is that map2() recycles its inputs to make sure that they’re the same length:
+
+<img src="https://d33wubrfki0l68.cloudfront.net/55032525ec77409e381dcd200a47e1787e65b964/dcaef/diagrams/functionals/map2-recycle.png" width="368" style="display: block; margin: auto;">
+
+###3. No outputs: walk() and friends
+
+Most functions are called for the value that they return, so it makes sense to capture and store the value with a map() function. But some functions are called primarily for their side-effects (e.g. cat(), write.csv(), or ggsave()) and it doesn’t make sense to capture their results. Take this simple example that displays a welcome message using cat(). cat() returns NULL, so while map() works (in the sense that it generates the desired welcomes), it also returns list(NULL, NULL).
+```{r}
+welcome <- function(x) {
+  cat("Welcome ", x, "!\n", sep = "")
+}
+names <- c("Hadley", "Jenny")
+
+# As well as generate the welcomes, it also shows 
+# the return value of cat()
+map(names, welcome)
+```
+purrr provides the walk family of functions that ignore the return values of the .f and instead return .x invisibly
+```{r}
+walk(names, welcome)
+```
+One of the most useful walk() variants is walk2() because a very common side-effect is saving something to disk, and when saving something to disk you always have a pair of values: the object and the path that you want to save it to.
+<img src="https://d33wubrfki0l68.cloudfront.net/19d5f7d265107c81dded3e98319d48ec01821308/b8621/diagrams/functionals/walk2.png" width="316" style="display: block; margin: auto;">
+
+
+<p>For example, imagine you have a list of data frames (which I’ve created here using <code>split()</code>), and you’d like to save each one to a separate CSV file. That’s easy with <code>walk2()</code>:</p>
+
+```{r}
+temp <- tempfile()
+dir.create(temp)
+
+cyls <- split(mtcars, mtcars$cyl)
+paths <- file.path(temp, paste0("cyl-", names(cyls), ".csv"))
+walk2(cyls, paths, write.csv)
+
+dir(temp)
+```
+
+<p>Here the <code>walk2()</code> is equivalent to <code>write.csv(cyls[[1]], paths[[1]])</code>, <code>write.csv(cyls[[2]], paths[[2]])</code>, <code>write.csv(cyls[[3]], paths[[3]])</code>.</p>
+
+
+### 4.  Iterating over values and indices imap
+<p>There are three basic ways to loop over a vector with a for loop:</p>
+<ul>
+<li>Loop over the elements: <code>for (x in xs)</code></li>
+<li>Loop over the numeric indices: <code>for (i in seq_along(xs))</code></li>
+<li>Loop over the names: <code>for (nm in names(xs))</code></li>
+</ul>
+<p>The first form is analogous to the <code>map()</code> family. The second and third forms are equivalent to the <code>imap()</code> family which allows you to iterate over the values and the indices of a vector in parallel.</p>
+<p><code>imap()</code> is like <code>map2()</code> in the sense that your <code>.f</code> gets called with two arguments, but here both are derived from the vector. <code>imap(x, f)</code> is equivalent to <code>map2(x, names(x), f)</code> if x has names, and <code>map2(x, seq_along(x), f)</code> if it does not.</p>
+<p><code>imap()</code> is often useful for constructing labels:</p>
+```{r}
+imap_chr(iris, ~ paste0("The first value of ", .y, " is ", .x[[1]]))
+```
+If the vector is unnamed, the second argument will be the index:
+```{r}
+x <- map(1:6, ~ sample(1000, 10))
+imap_chr(x, ~ paste0("The highest value of ", .y, " is ", max(.x)))
+```
+<p><code>imap()</code> is a useful helper if you want to work with the values in a vector along with their positions.</p>
+
+###5. Any number of inputs: pmap() and friends
+
+<p>Since we have <code>map()</code> and <code>map2()</code>, you might expect <code>map3()</code>, <code>map4()</code>, <code>map5()</code>, … But where would you stop? Instead of generalising <code>map2()</code> to an arbitrary number of arguments, purrr takes a slightly different tack with <code>pmap()</code>: you supply it a single list, which contains any number of arguments. In most cases, that will be a list of equal-length vectors, i.e.&nbsp;something very similar to a data frame. In diagrams, I’ll emphasise that relationship by drawing the input similar to a data frame.</p>
+
+<img src="https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png" width="354" style="display: block; margin: auto;">
+
+As before, the varying arguments come before .f (although now they must be wrapped in a list), and the constant arguments come afterwards.
+```{r}
+pmap_dbl(list(xs, ws), weighted.mean, na.rm = TRUE)
+```
+
+A big difference between pmap() and the other map functions is that pmap() gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section 9.2.5, where we wanted to vary the trim argument to x, we could instead use pmap():
+
+```{r}
+trims <- c(0, 0.1, 0.2, 0.5)
+x <- rcauchy(1000)
+
+pmap_dbl(list(trim = trims), mean, x = x)
+```
+
+I think it’s good practice to name the components of the list to make it very clear how the function will be called.
+
+It’s often convenient to call pmap() with a data frame. A handy way to create that data frame is with tibble::tribble(), which allows you to describe a data frame row-by-row
+
+```{r}
+params <- tibble::tribble(
+  ~ n, ~ min, ~ max,
+   1L,     0,     1,
+   2L,    10,   100,
+   3L,   100,  1000
+)
+
+pmap(params, runif)
+```
+<img src="https://d33wubrfki0l68.cloudfront.net/e698354d802ce16f83546db63c45a19b8d51f45e/43de7/diagrams/functionals/pmap-3.png" width="449" style="display: block; margin: auto;">
+
+
+Here, the column names are critical: I’ve carefully chosen to match them to the arguments to runif(), so the pmap(params, runif) is equivalent to runif(n = 1L, min = 0, max = 1), runif(n = 2, min = 10, max = 100), runif(n = 3L, min = 100, max = 1000). (If you have a data frame in hand, and the names don’t match, use dplyr::rename() or similar.)
+
 
 
