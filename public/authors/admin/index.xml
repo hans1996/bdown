@@ -61,11 +61,11 @@
 &lt;p&gt;A &lt;strong&gt;functional&lt;/strong&gt; is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise &amp;lt;- function(f) f(runif(1e3))
 randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4922758&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5056915&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4871563&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5006786&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 522.4503&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 509.5998&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This chapter will focus on functionals provided by the purrr package&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;triple &amp;lt;- function(x) x * 3
@@ -116,9 +116,9 @@ map_dbl(mtcars, mean)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:3, ~runif(2))
 str(x)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## List of 3
-##  $ : num [1:2] 0.102 0.705
-##  $ : num [1:2] 0.0746 0.6763
-##  $ : num [1:2] 0.0668 0.0929&lt;/code&gt;&lt;/pre&gt;
+##  $ : num [1:2] 0.478 0.679
+##  $ : num [1:2] 0.981 0.793
+##  $ : num [1:2] 0.924 0.159&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The map functions for extracting elements from a vector , You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position.These are very useful for working with deeply nested lists, which often arise when working with JSON.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- list(
   list(-1, x = 1, y = c(2), z = &amp;quot;a&amp;quot;),
@@ -166,9 +166,9 @@ map_dbl(x, ~ mean(.x, na.rm = TRUE))&lt;/code&gt;&lt;/pre&gt;
 
 x &amp;lt;- c(1, 2, 3, 4)
 map_dbl(x, plus, runif(1))# runif(1) 只使用一次的結果&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.830831 2.830831 3.830831 4.830831&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.178341 2.178341 3.178341 4.178341&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(x, ~ plus(.x, runif(1))) #x長度4,所以使用4次runif(1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.778656 2.715433 3.027062 4.766441&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.211136 2.746890 3.973449 4.125487&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;varying-another-argument&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Varying another argument&lt;/h2&gt;
@@ -181,10 +181,10 @@ x &amp;lt;- rcauchy(1000)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;The simplest technique is to use an anonymous function to rearrange the argument order:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(trims, ~ mean(x, trim = .x))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -1.642255e+02 -3.979610e-02 -2.910388e-02 -8.223326e-03&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.228947915  0.016333603  0.020943819  0.006378023&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#or
 map_dbl(trims, function(trim) mean(x, trim = trim))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -1.642255e+02 -3.979610e-02 -2.910388e-02 -8.223326e-03&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.228947915  0.016333603  0.020943819  0.006378023&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;purrr-style&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Purrr style&lt;/h2&gt;
