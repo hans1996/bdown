@@ -119,11 +119,11 @@
 &lt;p&gt;A &lt;strong&gt;functional&lt;/strong&gt; is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise &amp;lt;- function(f) f(runif(1e3))
 randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5003708&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5180728&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5088848&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4970412&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 504.991&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 494.5314&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This chapter will focus on functionals provided by the purrr package&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;triple &amp;lt;- function(x) x * 3
@@ -175,9 +175,9 @@ map_dbl(mtcars, mean)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:3, ~runif(2))
 str(x)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## List of 3
-##  $ : num [1:2] 0.394 0.985
-##  $ : num [1:2] 0.997 0.471
-##  $ : num [1:2] 0.178 0.774&lt;/code&gt;&lt;/pre&gt;
+##  $ : num [1:2] 0.165 0.808
+##  $ : num [1:2] 0.179 0.884
+##  $ : num [1:2] 0.6862 0.0704&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The map functions for extracting elements from a vector , You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position.These are very useful for working with deeply nested lists, which often arise when working with JSON.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- list(
   list(-1, x = 1, y = c(2), z = &amp;quot;a&amp;quot;),
@@ -233,9 +233,9 @@ map_dbl(Y, ~ mean(.x, na.rm = TRUE))&lt;/code&gt;&lt;/pre&gt;
 
 x &amp;lt;- c(1, 2, 3, 4)
 map_dbl(x, plus, runif(1))# runif(1) 只使用一次的結果&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.992709 2.992709 3.992709 4.992709&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.051538 2.051538 3.051538 4.051538&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(x, ~ plus(.x, runif(1))) #x長度4,所以使用4次runif(1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.025210 2.494284 3.093256 4.232852&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.079182 2.451325 3.165983 4.944328&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;varying-another-argument&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Varying another argument&lt;/h2&gt;
@@ -248,10 +248,10 @@ x &amp;lt;- rcauchy(1000)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;The simplest technique is to use an anonymous function to rearrange the argument order:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(trims, ~ mean(x, trim = .x))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.98581035 -0.10341385 -0.09139383 -0.06381363&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.98554957 -0.06582493 -0.04275515 -0.03877875&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#or
 map_dbl(trims, function(trim) mean(x, trim = trim))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.98581035 -0.10341385 -0.09139383 -0.06381363&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.98554957 -0.06582493 -0.04275515 -0.03877875&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;purrr-style&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Purrr style&lt;/h2&gt;
@@ -416,21 +416,21 @@ xs[[1]][[1]] &amp;lt;- NA
 ws &amp;lt;- map(1:8, ~ rpois(10, 5) + 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You can use map_dbl() to compute the unweighted means:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.5294233 0.4764708 0.4476263 0.4512332 0.4964273 0.4962690
-## [8] 0.5578419&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.5682778 0.6541659 0.4902992 0.4445505 0.5618488 0.4708310
+## [8] 0.2442385&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But passing ws as an additional argument doesn’t work because arguments after &lt;code&gt;.f&lt;/code&gt;are not transformed:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, weighted.mean, w = ws)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Error in weighted.mean.default(.x[[i]], ...): &amp;#39;x&amp;#39; and &amp;#39;w&amp;#39; must have the same length&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/a468c847ea8aca9a6131492e1e7431f418259eaf/ce4e0/diagrams/functionals/map-arg-recycle.png&#34; width=&#34;345&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We need a new tool: a &lt;code&gt;map2()&lt;/code&gt;, which is vectorised over two arguments. This means both &lt;code&gt;.x&lt;/code&gt; and &lt;code&gt;.y&lt;/code&gt; are varied in each call to &lt;code&gt;.f&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.5290980 0.5019418 0.4723167 0.4292461 0.4676345 0.4872648
-## [8] 0.5453608&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.5662181 0.6843998 0.4904382 0.4689844 0.5443301 0.4432096
+## [8] 0.2414307&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/f5cddf51ec9c243a7c13732b0ce46b0868bf8a31/501a8/diagrams/functionals/map2.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;The arguments to &lt;code&gt;map2()&lt;/code&gt; are slightly different to the arguments to &lt;code&gt;map()&lt;/code&gt; as two vectors come before the function, rather than one. Additional arguments still go afterwards:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.6201485 0.5290980 0.5019418 0.4723167 0.4292461 0.4676345 0.4872648
-## [8] 0.5453608&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5435303 0.5662181 0.6843998 0.4904382 0.4689844 0.5443301 0.4432096
+## [8] 0.2414307&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/7a545699ff7069a98329fcfbe6e42b734507eb16/211a5/diagrams/functionals/map2-arg.png&#34; width=&#34;453&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;One of the big differences between map2() and the simple function above is that map2() recycles its inputs to make sure that they’re the same length:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/55032525ec77409e381dcd200a47e1787e65b964/dcaef/diagrams/functionals/map2-recycle.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
@@ -513,9 +513,9 @@ The first form is analogous to the &lt;code&gt;map()&lt;/code&gt; family. The se
 &lt;p&gt;If the vector is unnamed, the second argument will be the index:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:6, ~ sample(1000, 10))
 imap_chr(x, ~ paste0(&amp;quot;The highest value of &amp;quot;, .y, &amp;quot; is &amp;quot;, max(.x)))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 917&amp;quot; &amp;quot;The highest value of 2 is 862&amp;quot;
-## [3] &amp;quot;The highest value of 3 is 990&amp;quot; &amp;quot;The highest value of 4 is 941&amp;quot;
-## [5] &amp;quot;The highest value of 5 is 851&amp;quot; &amp;quot;The highest value of 6 is 825&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 994&amp;quot; &amp;quot;The highest value of 2 is 830&amp;quot;
+## [3] &amp;quot;The highest value of 3 is 982&amp;quot; &amp;quot;The highest value of 4 is 978&amp;quot;
+## [5] &amp;quot;The highest value of 5 is 987&amp;quot; &amp;quot;The highest value of 6 is 991&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 &lt;code&gt;imap()&lt;/code&gt; is a useful helper if you want to work with the values in a vector along with their positions.
 &lt;/p&gt;
@@ -528,14 +528,14 @@ Since we have &lt;code&gt;map()&lt;/code&gt; and &lt;code&gt;map2()&lt;/code&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png&#34; width=&#34;354&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;As before, the varying arguments come before .f (although now they must be wrapped in a list), and the constant arguments come afterwards.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pmap_dbl(list(xs, ws), weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.6201485 0.5290980 0.5019418 0.4723167 0.4292461 0.4676345 0.4872648
-## [8] 0.5453608&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5435303 0.5662181 0.6843998 0.4904382 0.4689844 0.5443301 0.4432096
+## [8] 0.2414307&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A big difference between pmap() and the other map functions is that pmap() gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section 9.2.5, where we wanted to vary the trim argument to x, we could instead use pmap():&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;trims &amp;lt;- c(0, 0.1, 0.2, 0.5)
 x &amp;lt;- rcauchy(1000)
 
 pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.33219596  0.07870467  0.07923206  0.05542525&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  2.809533351 -0.004498009  0.016845353  0.035404020&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I think it’s good practice to name the components of the list to make it very clear how the function will be called.&lt;/p&gt;
 &lt;p&gt;It’s often convenient to call pmap() with a data frame. A handy way to create that data frame is with tibble::tribble(), which allows you to describe a data frame row-by-row&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;params &amp;lt;- tibble::tribble(
@@ -547,13 +547,13 @@ pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
 
 pmap(params, runif)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [[1]]
-## [1] 0.6123105
+## [1] 0.3767931
 ## 
 ## [[2]]
-## [1] 83.46095 85.35750
+## [1] 35.25376 48.21015
 ## 
 ## [[3]]
-## [1] 746.3619 650.8859 407.0684&lt;/code&gt;&lt;/pre&gt;
+## [1] 353.9220 612.6494 846.7021&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e698354d802ce16f83546db63c45a19b8d51f45e/43de7/diagrams/functionals/pmap-3.png&#34; width=&#34;449&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Here, the column names are critical: I’ve carefully chosen to match them to the arguments to runif(), so the pmap(params, runif) is equivalent to runif(n = 1L, min = 0, max = 1), runif(n = 2, min = 10, max = 100), runif(n = 3L, min = 100, max = 1000). (If you have a data frame in hand, and the names don’t match, use dplyr::rename() or similar.)&lt;/p&gt;
 &lt;/div&gt;
@@ -1036,6 +1036,529 @@ gantt
     
     <item>
       <title>Display Jupyter Notebooks with Academic</title>
+      <link>/python/list/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>/python/list/</guid>
+      <description>&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a=[9,&amp;quot;中山&amp;quot;,&amp;quot;math&amp;quot;,2.5,[2,8]]
+a[-5]
+a[0]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;9
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;b = [[1,2],[9,4,5]]
+c = b[0][1]
+d=b[1][0]
+e=len(b)
+f= len(b[1])
+print(&amp;quot;c=&amp;quot;,c)
+print(&amp;quot;d=&amp;quot;,d)
+print(&amp;quot;e=&amp;quot;,e)
+print(&amp;quot;f=&amp;quot;,f)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;c= 2
+d= 9
+e= 2
+f= 3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a =[1,2,3,4,5]
+a[1:-1]=a
+a[1:-1]=[]
+print(a)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 5]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a=[1,2]
+b = a
+b=b+[3]
+a
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 2]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a=[1,2]
+b = a
+b+=[3]
+a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 2, 3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import copy
+a = [1, 2, 3, 4, [&#39;a&#39;, &#39;b&#39;]] #原始对象
+ 
+b = a                       #赋值，传对象的引用
+c = copy.copy(a)            #对象拷贝，浅拷贝
+d = copy.deepcopy(a)        #对象拷贝，深拷贝
+ 
+a.append(5)                 #修改对象a
+a[4].append(&#39;c&#39;)            #修改对象a中的[&#39;a&#39;, &#39;b&#39;]数组对象
+ 
+print( &#39;a = &#39;, a )
+print( &#39;b = &#39;, b )
+print( &#39;c = &#39;, c )
+print( &#39;d = &#39;, d )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;a =  [1, 2, 3, 4, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], 5]
+b =  [1, 2, 3, 4, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;], 5]
+c =  [1, 2, 3, 4, [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]]
+d =  [1, 2, 3, 4, [&#39;a&#39;, &#39;b&#39;]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;### list comprehension
+# 一般寫法
+
+arr1 = []
+
+for i in range(10):
+    arr1.append(i)
+
+print(arr1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# in-place construction
+arr1 = [i for i in range(10)]
+
+print(arr1)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# in-place construction
+arr1 = [i for i in range(10)]
+
+# you can use if to filter the elements
+arr2 = [x for x in arr1 if x % 2 == 0]
+
+# you can use as many conditions as you want!
+arr3 = [x for x in arr1 if x &amp;gt;= 3 and x % 2]
+
+# use nested for loops to make everyone dizzy XD
+arr4 = [(x, y) for x in range(3) for y in range(4)]
+
+print(arr1)
+print(arr2)
+print(arr3)
+print(arr4)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+[0, 2, 4, 6, 8]
+[3, 5, 7, 9]
+[(0, 0), (0, 1), (0, 2), (0, 3), (1, 0), (1, 1), (1, 2), (1, 3), (2, 0), (2, 1), (2, 2), (2, 3)]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;[x for x in range(4)]
+[t*t for t in [1,2,3]]
+[[x,x*x] for x in range(3)]
+[x for x in range(10) if x not in [3,4,5]]
+[[x,x*x] for x in range(4) if x//3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 9]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+###############################
+
+
+
+a=[3,4]
+b=[a]*2
+a[1]=8
+b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 8], [3, 8]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a=[3,4]
+b=a[:]*2
+a[1]=8
+b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[3, 4, 3, 4]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#for 迴圈與串列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;b =[[1],[8,2],[4,3,3]]
+for i in range(len(b)):
+    for j in range(len(b[i])):
+        print(b[i][j],end=&amp;quot; &amp;quot;)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;1 
+8 2 
+4 3 3 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#同上
+b =[[1],[8,2],[4,3,3]]
+for p in b:
+    for x in p:
+        print(x,end=&amp;quot; &amp;quot;)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;1 
+8 2 
+4 3 3 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#同上
+for p in [[1],[8,2],[4,3,3]]:
+    for x in p:
+        print(x,end=&amp;quot; &amp;quot;)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;1 
+8 2 
+4 3 3 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#for 迴圈更改 串列元素
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a =[1,8,3]
+for i in range(len(a)):
+    a[i]+=10
+print(a)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[11, 18, 13]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a =[1,8,3]
+for x in a:
+    x+=10
+print(a)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 8, 3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;b=[[1],[5,8],[3,4]]
+for i in range(len(b)):
+    for j in range(len(b[i])):
+        b[i][j]+=10
+print(b)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[11], [15, 18], [13, 14]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;b=[[1],[5,8],[3,4]]
+for p in b:
+    for i in range(len(p)):
+        p[i]+=10
+print(b)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[11], [15, 18], [13, 14]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#有誤
+b=[[1],[5,8],[3,4]]
+for p in b:
+    for x in p:
+        x +=10
+print(b)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[1], [5, 8], [3, 4]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#字串分解成字元串列
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;list(&amp;quot;abc&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;list(&amp;quot;123&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;n=423
+a=[int(x) for x in list(str(n))]
+a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[4, 2, 3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#使用index取出下標
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dirs=[&amp;quot;west&amp;quot;,&amp;quot;north&amp;quot;,&amp;quot;west&amp;quot;,&amp;quot;south&amp;quot;]
+dirs.index(&amp;quot;west&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for d in dirs:
+    print(d,dirs.index(d),sep=&amp;quot;:&amp;quot;,end=&amp;quot; &amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;west:0 north:1 west:0 south:3 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;####tuple##
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;(one,two,three)=(1,2,3)
+three
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;[one,two,three]=[1,2,3]
+three
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;3
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a=(4,5,6)
+(four,five,six) = a
+six
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;6
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;###小括號省略
+
+one ,two =1,2
+two
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from random import*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;nums = [uniform(-1,1) for i in range(4)]
+for x in nums : print(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;0.4867200676882866
+0.6229973999177287
+-0.5681957844554919
+0.39087687240861757
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;nums = [uniform(-1,1) for i in range(4)]
+print(nums)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[-0.5903251082623902, 0.3351431014940154, -0.5958451499766018, 0.568850457028085]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;## 10 人擲骰子&#39;
+
+import random
+
+foo = [random.randint(1,6) for i in range(10)]
+print(foo)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[6, 1, 6, 3, 1, 3, 4, 5, 5, 1]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 10個號碼隨意分給4個人,每人2球
+balls=list(range(1,11))
+
+#打亂順序
+
+random.shuffle(balls)
+print(balls)
+#分給4人,美人2球
+pno,m=4,2
+
+for i in range(pno):
+    print(i+1,end=&amp;quot;: &amp;quot;)
+    for x in balls[i*m:i*m+m]:
+        print(x,end=&amp;quot; &amp;quot;)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[4, 7, 9, 8, 2, 3, 5, 10, 1, 6]
+1: 4 7 
+2: 9 8 
+3: 2 3 
+4: 5 10 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#三人各擲四次色子
+
+dices = &amp;quot;牛馬獅虎龍鳳&amp;quot;
+
+#3人任意投擲4次
+
+pno , m = 3 ,4
+
+for p in range(pno):
+    print(p+1,end=&amp;quot;: &amp;quot;)
+    
+    for k in range(m):
+        print(random.choice(dices),end=&amp;quot; &amp;quot;)
+    print()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;1: 馬 馬 獅 馬 
+2: 獅 鳳 馬 牛 
+3: 鳳 牛 牛 馬 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;import random 
+
+while True :
+
+	# 斜條線數量
+	n = int( input(&amp;quot;&amp;gt; &amp;quot;) )
+
+	# m 最長直線高
+	# w 直條圖寬 
+	m , w = 9 , 3
+
+	# 使用亂數設定各直條線長
+	vals = [ random.randint(1,m) for i in range(1,n+1) ]
+
+	# 畫直條線
+	for s in range(m,0,-1) :
+		
+		for val in vals :
+
+			if s &amp;gt; val :
+				print( &amp;quot; &amp;quot;*w , end=&amp;quot; &amp;quot; )
+			elif s == val :
+				print( &amp;quot;\\&amp;quot; + str(val) + &amp;quot;/&amp;quot; , end=&amp;quot; &amp;quot; )
+			else :
+				print( &amp;quot; | &amp;quot; , end=&amp;quot; &amp;quot; )
+
+		print() 
+
+	# 畫底部等號
+	print( &amp;quot;=&amp;quot;*( (w+1)*n - 1) )
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;gt; 10
+\9/                                     
+ |          \8/                         
+ |           |                  \7/     
+ |           |          \6/ \6/  |      
+ |           |  \5/      |   |   |      
+ |           |   |       |   |   |      
+ |           |   |       |   |   |  \3/ 
+ |  \2/      |   |  \2/  |   |   |   |  
+ |   |  \1/  |   |   |   |   |   |   |  
+=======================================
+&amp;gt; -1
+
+
+
+
+
+
+
+
+
+
+&amp;gt; 10
+                            \9/         
+                             |          
+                    \7/      |  \7/     
+        \6/          |       |   |      
+    \5/  |           |       |   |      
+     |   |      \4/  |       |   |      
+     |   |       |   |  \3/  |   |  \3/ 
+\2/  |   |  \2/  |   |   |   |   |   |  
+ |   |   |   |   |   |   |   |   |   |  
+=======================================
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;1+1
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;from random import *
+
+n , total = 5 , 50000
+
+counts = [ 0 for x in range(n+1) ]
+
+for k in range(total) :
+
+    # 起始落下的位置
+    ball_pos = 2*randint(1,n) - 1
+
+    # 第一層釘子
+    move = 2*randint(0,1) - 1
+    ball_pos += move 
+
+    # 第二到第五層釘子
+    for i in range(2) :
+        
+        move = 2*randint(0,1) - 1
+        ball_pos += move 
+
+        # 碰到兩側，提前離開
+        if ball_pos &amp;lt; 0 or ball_pos &amp;gt; 2*n : break 
+
+        move = 2*randint(0,1) - 1
+        ball_pos += move 
+
+    # 球數統計
+    if ball_pos &amp;lt; 0 : 
+        counts[0] += 1
+    elif ball_pos &amp;gt; 2*n :
+        counts[-1] += 1
+    else :
+        counts[ball_pos//2] += 1
+
+# 列印
+for no in counts :
+    s = int(160*no/total+0.5)
+    print(str(s)+&amp;quot;/160&amp;quot;,end=&amp;quot; &amp;quot;)
+
+print()        
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;24/160 25/160 31/160 31/160 25/160 24/160 
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Display Jupyter Notebooks with Academic</title>
       <link>/r/jupyter/</link>
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       <guid>/r/jupyter/</guid>
@@ -1336,6 +1859,24 @@ $$&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://discourse.gohugo.io&#34; target=&#34;_blank&#34;&gt;Ask&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://sourcethemes.com/academic/docs/&#34; target=&#34;_blank&#34;&gt;Documentation&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Privacy Policy</title>
+      <link>/privacy/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/privacy/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Terms</title>
+      <link>/terms/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/terms/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
