@@ -45,6 +45,11 @@
   </url>
   
   <url>
+    <loc>/r/advanced_r/functional/</loc>
+    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/post/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
@@ -76,11 +81,6 @@
   
   <url>
     <loc>/reinforcement_learning/advanced_r/vector/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/r/advanced_r/functional/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -147,16 +147,6 @@
   <url>
     <loc>/slides/example/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/privacy/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/terms/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
   </url>
   
   <url>
