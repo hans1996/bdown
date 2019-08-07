@@ -1,0 +1,4 @@
+{%- extends 'script.tpl' -%}
+{% block markdowncell scoped %}
+{{ cell.source | comment_lines(prefix='# ') }}
+{% endblock markdowncell %}
