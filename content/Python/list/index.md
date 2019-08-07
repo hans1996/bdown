@@ -9,7 +9,7 @@ image:
   caption: ""
   focal_point: ""
 projects: []
-subtitle: 
+subtitle: list
 summary: 
 tags: []
 title: list
