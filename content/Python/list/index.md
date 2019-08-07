@@ -1,4 +1,21 @@
+---
+authors:
+- admin
+categories: []
+date: "2019-02-05T00:00:00Z"
+draft: false
+featured: false
+image:
+  caption: ""
+  focal_point: ""
+projects: []
+subtitle: 
+summary: 
+tags: []
+title: list
 
+
+---
 
 ```python
 a=[9,"中山","math",2.5,[2,8]]
