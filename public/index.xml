@@ -106,6 +106,271 @@
     </item>
     
     <item>
+      <title>function</title>
+      <link>/python/function/</link>
+      <pubDate>Mon, 12 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/python/function/</guid>
+      <description>
+
+&lt;h2 id=&#34;返回值&#34;&gt;返回值&lt;/h2&gt;
+
+&lt;p&gt;When creating a function using the def statement, you can specify what the return value should be with a return statement. A return statement consists of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The return keyword&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value or expression that the function should return 函數要返回的值或表示式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+import random
+def getAnswer(answerNumber):
+if answerNumber == 1:
+    return &#39;It is certain&#39;
+elif answerNumber == 2:
+    return &#39;It is decidedly so&#39;
+elif answerNumber == 3:
+    return &#39;Yes&#39;
+elif answerNumber == 4:
+    return &#39;Reply hazy try again&#39;
+elif answerNumber == 5:
+    return &#39;Ask again later&#39;
+elif answerNumber == 6:
+    return &#39;Concentrate and ask again&#39;
+elif answerNumber == 7:
+    return &#39;My reply is no&#39;
+elif answerNumber == 8:
+    return &#39;Outlook not so good&#39;
+elif answerNumber == 9:
+    return &#39;Very doubtful&#39;
+
+r = random.randint(1, 9)
+fortune = getAnswer(r)
+print(fortune)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is decidedly so&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;# NONE 值&lt;/p&gt;
+
+&lt;p&gt;print 值 返回 None
+ 如同 r 的 side effect
+ 對於有沒有寫return陳述句的函數,python都會加上return None&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;spam = print(&#39;Hello!&#39;)
+None == spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello!
+
+
+
+
+
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;區域變數不能使用在全域作用範圍內&#34;&gt;區域變數不能使用在全域作用範圍內&lt;/h2&gt;
+
+&lt;p&gt;(跟r一樣)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 31337
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-8-c77831cffe5d&amp;gt; in &amp;lt;module&amp;gt;()
+      2     eggs = 31337
+      3 spam()
+----&amp;gt; 4 print(eggs)
+
+
+NameError: name &#39;eggs&#39; is not defined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;local-scopes-cannot-use-variables-in-other-local-scopes&#34;&gt;Local Scopes Cannot Use Variables in Other Local Scopes&lt;/h2&gt;
+
+&lt;p&gt;The upshot is that local variables in one function are completely separate from the local variables in another function.&lt;/p&gt;
+
+&lt;p&gt;某個函式中的區域變數與其他函式中的區域變數是完全分開來的,就算名稱相同也完全不相干&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 99
+    bacon()
+    print(eggs)
+def bacon():
+    ham = 101
+    eggs = 0
+    
+spam()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;99
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gobal-陳述句&#34;&gt;gobal 陳述句&lt;/h2&gt;
+
+&lt;p&gt;If you need to modify a global variable from within a function, use the global statement. If you have a line such as global eggs at the top of a function, it tells Python, “In this function, eggs refers to the global variable, so don’t create a local variable with this name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs
+    eggs = &#39;spam&#39;
+
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are four rules to tell whether a variable is in a local scope or global scope:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;If a variable is being used in the global scope (that is, outside of all functions), then it is always a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If there is a global statement for that variable in a function, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise, if the variable is used in an assignment statement in the function, it is a local variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;But if the variable is not used in an assignment statement, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs    
+    eggs = &#39;spam&#39; # this is the global
+def bacon():
+    eggs = &#39;bacon&#39; # this is a local
+def ham():
+    print(eggs) # this is the global
+eggs = 42 # this is the global
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the spam() function, eggs is the global eggs variable, because there’s a global statement for eggs at the beginning of the function &lt;code&gt;1&lt;/code&gt;. In bacon(), eggs is a local variable, because there’s an assignment statement for it in that function &lt;code&gt;2&lt;/code&gt;. In ham() &lt;code&gt;3&lt;/code&gt;, eggs is the global variable, because there is no assignment statement or global statement for it in that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;例外處理&#34;&gt;例外處理&lt;/h2&gt;
+
+&lt;p&gt;python 程式中若有錯誤(error),或例外(exception)導致整個程式當掉,而我們並不希望發生這樣的事&lt;/p&gt;
+
+&lt;p&gt;ｅｘ：［除以０］&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    return 42 / divideBy
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+
+
+
+---------------------------------------------------------------------------
+
+ZeroDivisionError                         Traceback (most recent call last)
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in &amp;lt;module&amp;gt;()
+      4 print(spam(2))
+      5 print(spam(12))
+----&amp;gt; 6 print(spam(0))
+      7 print(spam(1))
+
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in spam(divideBy)
+      1 def spam(divideBy):
+----&amp;gt; 2     return 42 / divideBy
+      3 
+      4 print(spam(2))
+      5 print(spam(12))
+
+
+ZeroDivisionError: division by zero
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;利用try和except陳述句來處理,把有可能出錯的陳述句放在try子句當中,&lt;/p&gt;
+
+&lt;p&gt;當錯誤發生時,程式的執行會跳到接下來的except子句起始處&lt;/p&gt;
+
+&lt;p&gt;把前面除以0的程式碼放在try子句中,而except子句中寫入程式碼來處理錯誤發生時想要做的事&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    try:
+        return 42 / divideBy
+    except ZeroDivisionError:
+        print(&#39;Error: Invalid argument.&#39;)
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+Error: Invalid argument.
+None
+42.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;小型例子-猜數字遊戲&#34;&gt;小型例子 :猜數字遊戲&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# This is a guess the number game.
+import random
+secretNumber = random.randint(1, 20)
+print(&#39;I am thinking of a number between 1 and 20.&#39;)
+
+# Ask the player to guess 6 times.
+for guessesTaken in range(1, 7):
+    print(&#39;Take a guess.&#39;)
+    guess = int(input())
+
+    if guess &amp;lt; secretNumber:
+        print(&#39;Your guess is too low.&#39;)
+    elif guess &amp;gt; secretNumber:
+        print(&#39;Your guess is too high.&#39;)
+    else:
+        break    # This condition is the correct guess!
+
+if guess == secretNumber:
+    print(&#39;Good job! You guessed my number in &#39; + str(guessesTaken) + &#39; guesses!&#39;)
+else:
+    print(&#39;Nope. The number I was thinking of was &#39; + str(secretNumber))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;I am thinking of a number between 1 and 20.
+Take a guess.
+10
+Your guess is too high.
+Take a guess.
+1
+Your guess is too low.
+Take a guess.
+5
+Your guess is too low.
+Take a guess.
+8
+Your guess is too low.
+Take a guess.
+9
+Good job! You guessed my number in 5 guesses!
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Note-functional</title>
       <link>/r/advanced_r/functional/</link>
       <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
@@ -119,11 +384,11 @@
 &lt;p&gt;A &lt;strong&gt;functional&lt;/strong&gt; is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise &amp;lt;- function(f) f(runif(1e3))
 randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4994431&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4979525&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5081965&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.5009894&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 493.3069&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 505.8563&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This chapter will focus on functionals provided by the purrr package&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;triple &amp;lt;- function(x) x * 3
@@ -175,9 +440,9 @@ map_dbl(mtcars, mean)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:3, ~runif(2))
 str(x)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## List of 3
-##  $ : num [1:2] 0.577 0.523
-##  $ : num [1:2] 0.287 0.081
-##  $ : num [1:2] 0.361 0.735&lt;/code&gt;&lt;/pre&gt;
+##  $ : num [1:2] 0.974 0.884
+##  $ : num [1:2] 0.209 0.012
+##  $ : num [1:2] 0.000441 0.706986&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The map functions for extracting elements from a vector , You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position.These are very useful for working with deeply nested lists, which often arise when working with JSON.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- list(
   list(-1, x = 1, y = c(2), z = &amp;quot;a&amp;quot;),
@@ -233,9 +498,9 @@ map_dbl(Y, ~ mean(.x, na.rm = TRUE))&lt;/code&gt;&lt;/pre&gt;
 
 x &amp;lt;- c(1, 2, 3, 4)
 map_dbl(x, plus, runif(1))# runif(1) 只使用一次的結果&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.910608 2.910608 3.910608 4.910608&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.997554 2.997554 3.997554 4.997554&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(x, ~ plus(.x, runif(1))) #x長度4,所以使用4次runif(1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.574293 2.503344 3.005742 4.249308&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.216536 2.835829 3.793000 4.886238&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;varying-another-argument&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Varying another argument&lt;/h2&gt;
@@ -248,10 +513,10 @@ x &amp;lt;- rcauchy(1000)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;The simplest technique is to use an anonymous function to rearrange the argument order:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(trims, ~ mean(x, trim = .x))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.88158672 -0.02194673 -0.01597907 -0.03040541&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1.00390361 -0.11050684 -0.11007936 -0.08189157&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#or
 map_dbl(trims, function(trim) mean(x, trim = trim))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.88158672 -0.02194673 -0.01597907 -0.03040541&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1.00390361 -0.11050684 -0.11007936 -0.08189157&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;purrr-style&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Purrr style&lt;/h2&gt;
@@ -416,21 +681,21 @@ xs[[1]][[1]] &amp;lt;- NA
 ws &amp;lt;- map(1:8, ~ rpois(10, 5) + 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You can use map_dbl() to compute the unweighted means:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.4143758 0.4492282 0.4963031 0.5556096 0.3844297 0.5321038
-## [8] 0.5708729&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.7094898 0.6511579 0.6796300 0.6399170 0.2987327 0.3914403
+## [8] 0.4201664&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But passing ws as an additional argument doesn’t work because arguments after &lt;code&gt;.f&lt;/code&gt;are not transformed:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, weighted.mean, w = ws)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Error in weighted.mean.default(.x[[i]], ...): &amp;#39;x&amp;#39; and &amp;#39;w&amp;#39; must have the same length&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/a468c847ea8aca9a6131492e1e7431f418259eaf/ce4e0/diagrams/functionals/map-arg-recycle.png&#34; width=&#34;345&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We need a new tool: a &lt;code&gt;map2()&lt;/code&gt;, which is vectorised over two arguments. This means both &lt;code&gt;.x&lt;/code&gt; and &lt;code&gt;.y&lt;/code&gt; are varied in each call to &lt;code&gt;.f&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.3935776 0.4710440 0.4814602 0.5180704 0.3551716 0.5258767
-## [8] 0.5943715&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.6537628 0.6476663 0.7130350 0.5995471 0.3322199 0.4014337
+## [8] 0.4208917&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/f5cddf51ec9c243a7c13732b0ce46b0868bf8a31/501a8/diagrams/functionals/map2.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;The arguments to &lt;code&gt;map2()&lt;/code&gt; are slightly different to the arguments to &lt;code&gt;map()&lt;/code&gt; as two vectors come before the function, rather than one. Additional arguments still go afterwards:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4939092 0.3935776 0.4710440 0.4814602 0.5180704 0.3551716 0.5258767
-## [8] 0.5943715&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4973620 0.6537628 0.6476663 0.7130350 0.5995471 0.3322199 0.4014337
+## [8] 0.4208917&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/7a545699ff7069a98329fcfbe6e42b734507eb16/211a5/diagrams/functionals/map2-arg.png&#34; width=&#34;453&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;One of the big differences between map2() and the simple function above is that map2() recycles its inputs to make sure that they’re the same length:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/55032525ec77409e381dcd200a47e1787e65b964/dcaef/diagrams/functionals/map2-recycle.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
@@ -513,9 +778,9 @@ The first form is analogous to the &lt;code&gt;map()&lt;/code&gt; family. The se
 &lt;p&gt;If the vector is unnamed, the second argument will be the index:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:6, ~ sample(1000, 10))
 imap_chr(x, ~ paste0(&amp;quot;The highest value of &amp;quot;, .y, &amp;quot; is &amp;quot;, max(.x)))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 982&amp;quot; &amp;quot;The highest value of 2 is 882&amp;quot;
-## [3] &amp;quot;The highest value of 3 is 693&amp;quot; &amp;quot;The highest value of 4 is 987&amp;quot;
-## [5] &amp;quot;The highest value of 5 is 948&amp;quot; &amp;quot;The highest value of 6 is 870&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 950&amp;quot; &amp;quot;The highest value of 2 is 795&amp;quot;
+## [3] &amp;quot;The highest value of 3 is 870&amp;quot; &amp;quot;The highest value of 4 is 874&amp;quot;
+## [5] &amp;quot;The highest value of 5 is 942&amp;quot; &amp;quot;The highest value of 6 is 923&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 &lt;code&gt;imap()&lt;/code&gt; is a useful helper if you want to work with the values in a vector along with their positions.
 &lt;/p&gt;
@@ -528,14 +793,14 @@ Since we have &lt;code&gt;map()&lt;/code&gt; and &lt;code&gt;map2()&lt;/code&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png&#34; width=&#34;354&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;As before, the varying arguments come before .f (although now they must be wrapped in a list), and the constant arguments come afterwards.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pmap_dbl(list(xs, ws), weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4939092 0.3935776 0.4710440 0.4814602 0.5180704 0.3551716 0.5258767
-## [8] 0.5943715&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4973620 0.6537628 0.6476663 0.7130350 0.5995471 0.3322199 0.4014337
+## [8] 0.4208917&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A big difference between pmap() and the other map functions is that pmap() gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section 9.2.5, where we wanted to vary the trim argument to x, we could instead use pmap():&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;trims &amp;lt;- c(0, 0.1, 0.2, 0.5)
 x &amp;lt;- rcauchy(1000)
 
 pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] -0.05559929 -0.03190013 -0.04874079 -0.07049514&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  0.11093265 -0.08371504 -0.09735847 -0.11824479&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I think it’s good practice to name the components of the list to make it very clear how the function will be called.&lt;/p&gt;
 &lt;p&gt;It’s often convenient to call pmap() with a data frame. A handy way to create that data frame is with tibble::tribble(), which allows you to describe a data frame row-by-row&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;params &amp;lt;- tibble::tribble(
@@ -547,13 +812,13 @@ pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
 
 pmap(params, runif)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [[1]]
-## [1] 0.1405465
+## [1] 0.8600149
 ## 
 ## [[2]]
-## [1] 30.56796 23.74542
+## [1] 83.56022 43.85263
 ## 
 ## [[3]]
-## [1] 446.8714 621.9516 278.5139&lt;/code&gt;&lt;/pre&gt;
+## [1] 552.8369 870.7320 103.1562&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e698354d802ce16f83546db63c45a19b8d51f45e/43de7/diagrams/functionals/pmap-3.png&#34; width=&#34;449&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Here, the column names are critical: I’ve carefully chosen to match them to the arguments to runif(), so the pmap(params, runif) is equivalent to runif(n = 1L, min = 0, max = 1), runif(n = 2, min = 10, max = 100), runif(n = 3L, min = 100, max = 1000). (If you have a data frame in hand, and the names don’t match, use dplyr::rename() or similar.)&lt;/p&gt;
 &lt;/div&gt;
@@ -566,18 +831,6 @@ pmap(params, runif)&lt;/code&gt;&lt;/pre&gt;
       <link>/post/advanced_r/vector/</link>
       <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
       <guid>/post/advanced_r/vector/</guid>
-      <description>
-
-
-&lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/bd90c87ac98708b1731c92900f2f53ec6a71edaf/ce375/diagrams/name-value/binding-1.png&#34; width=&#34;160&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R(2353000000000)- basic vector</title>
-      <link>/python/advanced_r/vector/</link>
-      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/python/advanced_r/vector/</guid>
       <description>
 
 
@@ -1847,24 +2100,6 @@ print()
 
 &lt;pre&gt;&lt;code&gt;24/160 25/160 31/160 31/160 25/160 24/160 
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Terms</title>
-      <link>/terms/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      <guid>/terms/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     

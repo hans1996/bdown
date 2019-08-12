@@ -5,7 +5,7 @@
     <link>/python/</link>
       <atom:link href="/python/index.xml" rel="self" type="application/rss+xml" />
     <description>R</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2019 Hans</copyright><lastBuildDate>Mon, 05 Aug 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><copyright>© 2019 Hans</copyright><lastBuildDate>Mon, 12 Aug 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>/img/icon-192.png</url>
       <title>R</title>
@@ -13,14 +13,267 @@
     </image>
     
     <item>
-      <title>R(2353000000000)- basic vector</title>
-      <link>/python/advanced_r/vector/</link>
-      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
-      <guid>/python/advanced_r/vector/</guid>
+      <title>function</title>
+      <link>/python/function/</link>
+      <pubDate>Mon, 12 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/python/function/</guid>
       <description>
 
+&lt;h2 id=&#34;返回值&#34;&gt;返回值&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/bd90c87ac98708b1731c92900f2f53ec6a71edaf/ce375/diagrams/name-value/binding-1.png&#34; width=&#34;160&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
+&lt;p&gt;When creating a function using the def statement, you can specify what the return value should be with a return statement. A return statement consists of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The return keyword&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value or expression that the function should return 函數要返回的值或表示式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+import random
+def getAnswer(answerNumber):
+if answerNumber == 1:
+    return &#39;It is certain&#39;
+elif answerNumber == 2:
+    return &#39;It is decidedly so&#39;
+elif answerNumber == 3:
+    return &#39;Yes&#39;
+elif answerNumber == 4:
+    return &#39;Reply hazy try again&#39;
+elif answerNumber == 5:
+    return &#39;Ask again later&#39;
+elif answerNumber == 6:
+    return &#39;Concentrate and ask again&#39;
+elif answerNumber == 7:
+    return &#39;My reply is no&#39;
+elif answerNumber == 8:
+    return &#39;Outlook not so good&#39;
+elif answerNumber == 9:
+    return &#39;Very doubtful&#39;
+
+r = random.randint(1, 9)
+fortune = getAnswer(r)
+print(fortune)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is decidedly so&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;# NONE 值&lt;/p&gt;
+
+&lt;p&gt;print 值 返回 None
+ 如同 r 的 side effect
+ 對於有沒有寫return陳述句的函數,python都會加上return None&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;spam = print(&#39;Hello!&#39;)
+None == spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello!
+
+
+
+
+
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;區域變數不能使用在全域作用範圍內&#34;&gt;區域變數不能使用在全域作用範圍內&lt;/h2&gt;
+
+&lt;p&gt;(跟r一樣)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 31337
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-8-c77831cffe5d&amp;gt; in &amp;lt;module&amp;gt;()
+      2     eggs = 31337
+      3 spam()
+----&amp;gt; 4 print(eggs)
+
+
+NameError: name &#39;eggs&#39; is not defined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;local-scopes-cannot-use-variables-in-other-local-scopes&#34;&gt;Local Scopes Cannot Use Variables in Other Local Scopes&lt;/h2&gt;
+
+&lt;p&gt;The upshot is that local variables in one function are completely separate from the local variables in another function.&lt;/p&gt;
+
+&lt;p&gt;某個函式中的區域變數與其他函式中的區域變數是完全分開來的,就算名稱相同也完全不相干&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 99
+    bacon()
+    print(eggs)
+def bacon():
+    ham = 101
+    eggs = 0
+    
+spam()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;99
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gobal-陳述句&#34;&gt;gobal 陳述句&lt;/h2&gt;
+
+&lt;p&gt;If you need to modify a global variable from within a function, use the global statement. If you have a line such as global eggs at the top of a function, it tells Python, “In this function, eggs refers to the global variable, so don’t create a local variable with this name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs
+    eggs = &#39;spam&#39;
+
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are four rules to tell whether a variable is in a local scope or global scope:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;If a variable is being used in the global scope (that is, outside of all functions), then it is always a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If there is a global statement for that variable in a function, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise, if the variable is used in an assignment statement in the function, it is a local variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;But if the variable is not used in an assignment statement, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs    
+    eggs = &#39;spam&#39; # this is the global
+def bacon():
+    eggs = &#39;bacon&#39; # this is a local
+def ham():
+    print(eggs) # this is the global
+eggs = 42 # this is the global
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the spam() function, eggs is the global eggs variable, because there’s a global statement for eggs at the beginning of the function &lt;code&gt;1&lt;/code&gt;. In bacon(), eggs is a local variable, because there’s an assignment statement for it in that function &lt;code&gt;2&lt;/code&gt;. In ham() &lt;code&gt;3&lt;/code&gt;, eggs is the global variable, because there is no assignment statement or global statement for it in that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;例外處理&#34;&gt;例外處理&lt;/h2&gt;
+
+&lt;p&gt;python 程式中若有錯誤(error),或例外(exception)導致整個程式當掉,而我們並不希望發生這樣的事&lt;/p&gt;
+
+&lt;p&gt;ｅｘ：［除以０］&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    return 42 / divideBy
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+
+
+
+---------------------------------------------------------------------------
+
+ZeroDivisionError                         Traceback (most recent call last)
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in &amp;lt;module&amp;gt;()
+      4 print(spam(2))
+      5 print(spam(12))
+----&amp;gt; 6 print(spam(0))
+      7 print(spam(1))
+
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in spam(divideBy)
+      1 def spam(divideBy):
+----&amp;gt; 2     return 42 / divideBy
+      3 
+      4 print(spam(2))
+      5 print(spam(12))
+
+
+ZeroDivisionError: division by zero
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;利用try和except陳述句來處理,把有可能出錯的陳述句放在try子句當中,&lt;/p&gt;
+
+&lt;p&gt;當錯誤發生時,程式的執行會跳到接下來的except子句起始處&lt;/p&gt;
+
+&lt;p&gt;把前面除以0的程式碼放在try子句中,而except子句中寫入程式碼來處理錯誤發生時想要做的事&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    try:
+        return 42 / divideBy
+    except ZeroDivisionError:
+        print(&#39;Error: Invalid argument.&#39;)
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+Error: Invalid argument.
+None
+42.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;小型例子-猜數字遊戲&#34;&gt;小型例子 :猜數字遊戲&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# This is a guess the number game.
+import random
+secretNumber = random.randint(1, 20)
+print(&#39;I am thinking of a number between 1 and 20.&#39;)
+
+# Ask the player to guess 6 times.
+for guessesTaken in range(1, 7):
+    print(&#39;Take a guess.&#39;)
+    guess = int(input())
+
+    if guess &amp;lt; secretNumber:
+        print(&#39;Your guess is too low.&#39;)
+    elif guess &amp;gt; secretNumber:
+        print(&#39;Your guess is too high.&#39;)
+    else:
+        break    # This condition is the correct guess!
+
+if guess == secretNumber:
+    print(&#39;Good job! You guessed my number in &#39; + str(guessesTaken) + &#39; guesses!&#39;)
+else:
+    print(&#39;Nope. The number I was thinking of was &#39; + str(secretNumber))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;I am thinking of a number between 1 and 20.
+Take a guess.
+10
+Your guess is too high.
+Take a guess.
+1
+Your guess is too low.
+Take a guess.
+5
+Your guess is too low.
+Take a guess.
+8
+Your guess is too low.
+Take a guess.
+9
+Good job! You guessed my number in 5 guesses!
+&lt;/code&gt;&lt;/pre&gt;
 </description>
     </item>
     

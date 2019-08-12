@@ -35,13 +35,23 @@
   
   <url>
     <loc>/authors/admin/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>/authors/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
+    <lastmod>2019-08-12T00:00:00+00:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/python/</loc>
+    <lastmod>2019-08-12T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/python/function/</loc>
+    <lastmod>2019-08-12T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -51,11 +61,6 @@
   
   <url>
     <loc>/post/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/python/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -71,11 +76,6 @@
   
   <url>
     <loc>/post/advanced_r/vector/</loc>
-    <lastmod>2019-08-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/python/advanced_r/vector/</loc>
     <lastmod>2019-08-05T00:00:00+00:00</lastmod>
   </url>
   
@@ -152,16 +152,6 @@
   <url>
     <loc>/python/list/</loc>
     <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/privacy/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/terms/</loc>
-    <lastmod>2018-06-28T00:00:00+01:00</lastmod>
   </url>
   
   <url>
