@@ -1,4 +1,20 @@
+---
+authors:
+- admin
+categories: []
+date: "2019-08-12T00:00:00Z"
+draft: false
+featured: false
+image:
+  caption: ""
+  focal_point: ""
+projects: []
+subtitle: Learn how to blog in Academic using Jupyter notebooks
+summary: Learn how to blog in Academic using Jupyter notebooks
+tags: []
+title: list 
 
+---
 ## 返回值
 When creating a function using the def statement, you can specify what the return value should be with a return statement. A return statement consists of the following:
 
