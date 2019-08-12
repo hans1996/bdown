@@ -9,10 +9,10 @@ image:
   caption: ""
   focal_point: ""
 projects: []
-subtitle: Learn how to blog in Academic using Jupyter notebooks
+subtitle: function
 summary: Learn how to blog in Academic using Jupyter notebooks
 tags: []
-title: list 
+title: function 
 
 ---
 ## 返回值
