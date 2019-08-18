@@ -1,0 +1,427 @@
+---
+authors:
+- admin
+categories: []
+date: "2019-08-05T00:00:00Z"
+draft: false
+featured: false
+image:
+  caption: ""
+  focal_point: ""
+projects: []
+subtitle: regular-expression
+summary: 
+tags: []
+title: regular-expression
+---
+
+
+
+<table>
+<thead>
+<tr class="header">
+<th>字元分類</th>
+<th>表示</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>\d</td>
+<td>0-9的任何數字</td>
+</tr>
+<tr class="even">
+<td>\D</td>
+<td>除了0-9的任何數字</td>
+</tr>
+<tr class="odd">
+<td>\w</td>
+<td>任何字母,數字或底線</td>
+</tr>
+<tr class="even">
+<td>\W</td>
+<td>除了字母,數字或底線以外的任何字元</td>
+</tr>
+<tr class="odd">
+<td>\s</td>
+<td>空格,定位符號或換行符號</td>
+</tr>
+<tr class="even">
+<td>\S</td>
+<td>除了空格,定位符號或換行符號以外的任何字元</td>
+</tr>
+</tbody>
+</table>
+<div class="book">
+<ul class="itemizedlist">
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">?</code> matches zero or one of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">*</code> matches zero or more of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">+</code> matches one or more of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">{n}</code> matches exactly <span class="calibre1"><em class="calibre5">n</em></span> of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">{n,}</code> matches <span class="calibre1"><em class="calibre5">n</em></span> or more of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">{,m}</code> matches 0 to <span class="calibre1"><em class="calibre5">m</em></span> of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">{n,m}</code> matches at least <span class="calibre1"><em class="calibre5">n</em></span> and at most <span class="calibre1"><em class="calibre5">m</em></span> of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+<code class="literal1">{n,m}?</code> or <code class="literal1">*?</code> or <code class="literal1">+?</code> performs a nongreedy match of the preceding group.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+<code class="literal1">^spam</code> means the string must begin with <span class="calibre1"><em class="calibre5">spam</em></span>.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+<code class="literal1">spam$</code> means the string must end with <span class="calibre1"><em class="calibre5">spam</em></span>.
+</p>
+</li>
+<li class="listitem">
+<p class="calibre4">
+The <code class="literal1">.</code> matches any character, except newline characters.
+</p>
+</li>
+</ul>
+</div>
+<ul>
+<li><p>\d, \w, and \s match a digit, word, or space character, respectively.</p></li>
+<li><p>\D, \W, and \S match anything except a digit, word, or space character, respectively.</p></li>
+<li><p>[abc] matches any character between the brackets (such as a, b, or c).</p></li>
+<li><p>[^abc] matches any character that isn’t between the brackets.</p></li>
+</ul>
+<div id="python--re" class="section level3">
+<h3>python 正規表達式 都在re模組</h3>
+<ol style="list-style-type: decimal">
+<li>import re</li>
+<li>re.complie() 建立 Regex物件 (記得使用原始字串 (r))</li>
+<li>對 Regex 物件的 search() 方法傳入想要尋找的字串,會返回一個Match物件</li>
+<li>呼叫Match物件的group()方法,返回實際比對符合的字串</li>
+</ol>
+<pre class="python"><code>import re
+
+phoneNumRegex = re.compile(r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;)
+mo = phoneNumRegex.search(&#39;My number is 415-555-4242.&#39;)
+print(&#39;Phone number found: &#39; + mo.group())</code></pre>
+<pre><code>## Phone number found: 415-555-4242</code></pre>
+<p>我們想要把區域號碼從電話號碼中分開,可在正規表達式中加上括號來分組:</p>
+<p><code>(\d\d\d)-(\d\d\d-\d\d\d\d)</code></p>
+<p>隨後使用 group() 方法從某個分組中取得比對符合的文字</p>
+<pre class="python"><code>phoneNumRegex = re.compile(r&#39;(\d\d\d)-(\d\d\d-\d\d\d\d)&#39;)
+mo = phoneNumRegex.search(&#39;My number is 415-555-4242.&#39;)
+mo.group(1)</code></pre>
+<pre><code>## &#39;415&#39;</code></pre>
+<pre class="python"><code>mo.group(2)</code></pre>
+<pre><code>## &#39;555-4242&#39;</code></pre>
+<pre class="python"><code>mo.group(0)</code></pre>
+<pre><code>## &#39;415-555-4242&#39;</code></pre>
+<pre class="python"><code>mo.group()</code></pre>
+<pre><code>## &#39;415-555-4242&#39;</code></pre>
+<p>想要一次取得所有的分組,可用groups()方法</p>
+<pre class="python"><code>mo.groups()</code></pre>
+<pre><code>## (&#39;415&#39;, &#39;555-4242&#39;)</code></pre>
+<pre class="python"><code>areaCode,mainNumber = mo.groups()
+print(areaCode)</code></pre>
+<pre><code>## 415</code></pre>
+<pre class="python"><code>print(mainNumber)</code></pre>
+<pre><code>## 555-4242</code></pre>
+<p>想要在字串中比對括號,使用<code>\(</code> 和 <code>\)</code></p>
+<p>在傳入 re.compile()的原始字串內的<code>\(</code> 和 <code>\)</code>會變得實際比對()括號</p>
+<pre class="python"><code>phoneNumRegex = re.compile(r&#39;(\(\d\d\d\)) (\d\d\d-\d\d\d\d)&#39;)
+mo = phoneNumRegex.search(&#39;My phone number is (415) 555-4242.&#39;)
+mo.group(1)</code></pre>
+<pre><code>## &#39;(415)&#39;</code></pre>
+<pre class="python"><code>mo.group(2)</code></pre>
+<pre><code>## &#39;555-4242&#39;</code></pre>
+<div id="matching-multiple-groups-with-the-pipe" class="section level4">
+<h4>Matching Multiple Groups with the Pipe</h4>
+<p>正規表達式 r’Batman|Tina Fey’ 會比對 ‘Batman’ 或 ‘Tina Fey’</p>
+<pre class="python"><code>heroRegex = re.compile (r&#39;Batman|Tina Fey&#39;)
+mo1 = heroRegex.search(&#39;Batman and Tina Fey.&#39;)
+mo1.group()</code></pre>
+<pre><code>## &#39;Batman&#39;</code></pre>
+<p>想要比對’Batman’, ‘Batmobile’, ‘Batcopter’, ‘Batbat’ 中任一個都符合,因為都以’Bat’開頭 所以只要指定一次前置文字即可,利用括號</p>
+<pre class="python"><code>batRegex = re.compile(r&#39;Bat(man|mobile|copter|bat)&#39;)
+mo = batRegex.search(&#39;Batmobile lost a wheel&#39;)
+mo.group()</code></pre>
+<pre><code>## &#39;Batmobile&#39;</code></pre>
+<pre class="python"><code>mo.group(1)</code></pre>
+<pre><code>## &#39;mobile&#39;</code></pre>
+</div>
+<div id="optional-matching-with-the-question-mark" class="section level4">
+<h4>Optional Matching with the Question Mark</h4>
+<p>問號表示無論內容是否存在,正規表達式都會比對符合</p>
+<p>?字元表示他前面括號的分組在這模式中是可選擇性的</p>
+<p>?字元可看成 <strong>這個問號前的分組比對符合1次或0次</strong>都可以</p>
+<pre class="python"><code>batRegex = re.compile(r&#39;Bat(wo)?man&#39;)
+mo1 = batRegex.search(&#39;The Adventures of Batman&#39;)
+mo1.group()</code></pre>
+<pre><code>## &#39;Batman&#39;</code></pre>
+<pre class="python"><code>mo2 = batRegex.search(&#39;The Adventures of Batwoman&#39;)
+mo2.group()</code></pre>
+<pre><code>## &#39;Batwoman&#39;</code></pre>
+<p>用前面電話號碼來做說明,可在正規表達式中尋找含有區號和不含區號的電話號碼</p>
+<pre class="python"><code>phoneRegex = re.compile(r&#39;(\d\d\d-)?\d\d\d-\d\d\d\d&#39;)
+mo1 = phoneRegex.search(&#39;My number is 415-555-4242&#39;)
+mo1.group()</code></pre>
+<pre><code>## &#39;415-555-4242&#39;</code></pre>
+<pre class="python"><code>mo2 = phoneRegex.search(&#39;My number is 555-4242&#39;)
+mo2.group()</code></pre>
+<pre><code>## &#39;555-4242&#39;</code></pre>
+</div>
+<div id="matching-zero-or-more-with-the-star" class="section level4">
+<h4>Matching Zero or More with the Star</h4>
+<p><strong>* </strong>字元可看成 <strong>這個星號前的分組比對符合多次或0次</strong>都可以</p>
+<pre class="python"><code>batRegex = re.compile(r&#39;Bat(wo)*man&#39;)
+mo1 = batRegex.search(&#39;The Adventures of Batman&#39;)
+mo1.group()
+</code></pre>
+<pre><code>## &#39;Batman&#39;</code></pre>
+<pre class="python"><code>mo2 = batRegex.search(&#39;The Adventures of Batwoman&#39;)
+mo2.group()
+</code></pre>
+<pre><code>## &#39;Batwoman&#39;</code></pre>
+<pre class="python"><code>mo3 = batRegex.search(&#39;The Adventures of Batwowowowoman&#39;)
+mo3.group()</code></pre>
+<pre><code>## &#39;Batwowowowoman&#39;</code></pre>
+</div>
+<div id="matching-one-or-more-with-the-plus" class="section level4">
+<h4>Matching One or More with the Plus</h4>
+<p><strong>+</strong>字元可看成 <strong>這個+前的分組比對符合多次或1次</strong>都可以</p>
+<pre class="python"><code>batRegex = re.compile(r&#39;Bat(wo)+man&#39;)
+mo1 = batRegex.search(&#39;The Adventures of Batwoman&#39;)
+mo1.group()
+</code></pre>
+<pre><code>## &#39;Batwoman&#39;</code></pre>
+<pre class="python"><code>mo2 = batRegex.search(&#39;The Adventures of Batwowowowoman&#39;)
+mo2.group()
+</code></pre>
+<pre><code>## &#39;Batwowowowoman&#39;</code></pre>
+<pre class="python"><code>mo3 = batRegex.search(&#39;The Adventures of Batman&#39;)
+mo3 == None</code></pre>
+<pre><code>## True</code></pre>
+</div>
+<div id="matching-specific-repetitions-with-curly-brackets" class="section level4">
+<h4>Matching Specific Repetitions with Curly Brackets(大括號)</h4>
+<p>(Ha){3} 與 (Ha)(Ha)(Ha) 表達意思相同</p>
+<p>(Ha){3,5} 與 ((Ha)(Ha)(Ha))|((Ha)(Ha)(Ha)(Ha))|((Ha)(Ha)(Ha)(Ha)(Ha)) 表達意思相同</p>
+<p>(Ha){3,} 表示比對符合至少3次以上</p>
+<pre class="python"><code>haRegex = re.compile(r&#39;(Ha){3}&#39;)
+mo1 = haRegex.search(&#39;HaHaHa&#39;)
+mo1.group()
+</code></pre>
+<pre><code>## &#39;HaHaHa&#39;</code></pre>
+<pre class="python"><code>mo2 = haRegex.search(&#39;Ha&#39;)
+mo2 == None</code></pre>
+<pre><code>## True</code></pre>
+</div>
+<div id="greedy-and-nongreedy-matching" class="section level4">
+<h4>Greedy and Nongreedy Matching</h4>
+<p>python 正規表達式預設是greedy版本,就是盡可能找到最長符合比對的字串</p>
+<p>在大括弧後面加上一個問號,大括弧的non-greedy版本會盡可能找到最短符合比對的字串</p>
+<pre class="python"><code>greedyHaRegex = re.compile(r&#39;(Ha){3,5}&#39;)
+mo1 = greedyHaRegex.search(&#39;HaHaHaHaHa&#39;)
+mo1.group()</code></pre>
+<pre><code>## &#39;HaHaHaHaHa&#39;</code></pre>
+<pre class="python"><code>nongreedyHaRegex = re.compile(r&#39;(Ha){3,5}?&#39;)
+mo2 = nongreedyHaRegex.search(&#39;HaHaHaHaHa&#39;)
+mo2.group()</code></pre>
+<pre><code>## &#39;HaHaHa&#39;</code></pre>
+</div>
+<div id="the-findall-method" class="section level4">
+<h4>The findall() Method</h4>
+<p>search()方法會返回一個match物件,此物件內含有尋找比對字串中<strong>第一次</strong>找到符合的文字</p>
+<p>findall()方法則返回一組list,這組list為尋找比對字串中<strong>所有</strong>符合的文字內容</p>
+<pre class="python"><code>phoneNumRegex = re.compile(r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;)
+mo = phoneNumRegex.search(&#39;Cell: 415-555-9999 Work: 212-555-0000&#39;)
+mo.group()</code></pre>
+<pre><code>## &#39;415-555-9999&#39;</code></pre>
+<pre class="python"><code>phoneNumRegex = re.compile(r&#39;\d\d\d-\d\d\d-\d\d\d\d&#39;) # has no groups
+phoneNumRegex.findall(&#39;Cell: 415-555-9999 Work: 212-555-0000&#39;)</code></pre>
+<pre><code>## [&#39;415-555-9999&#39;, &#39;212-555-0000&#39;]</code></pre>
+<p>如果有分組,那findall會返回一個多元組(list of tuples)的list,每個多元組代表一個比對符合的內容</p>
+<pre class="python"><code>phoneNumRegex = re.compile(r&#39;(\d\d\d)-(\d\d\d)-(\d\d\d\d)&#39;) # has groups
+phoneNumRegex.findall(&#39;Cell: 415-555-9999 Work: 212-555-0000&#39;)</code></pre>
+<pre><code>## [(&#39;415&#39;, &#39;555&#39;, &#39;9999&#39;), (&#39;212&#39;, &#39;555&#39;, &#39;0000&#39;)]</code></pre>
+</div>
+</div>
+<div id="character-classes" class="section level3">
+<h3>Character Classes</h3>
+<table>
+<thead>
+<tr class="header">
+<th>字元分類</th>
+<th>表示</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>\d</td>
+<td>0-9的任何數字</td>
+</tr>
+<tr class="even">
+<td>\D</td>
+<td>除了0-9的任何數字</td>
+</tr>
+<tr class="odd">
+<td>\w</td>
+<td>任何字母,數字或底線</td>
+</tr>
+<tr class="even">
+<td>\W</td>
+<td>除了字母,數字或底線以外的任何字元</td>
+</tr>
+<tr class="odd">
+<td>\s</td>
+<td>空格,定位符號或換行符號</td>
+</tr>
+<tr class="even">
+<td>\S</td>
+<td>除了空格,定位符號或換行符號以外的任何字元</td>
+</tr>
+</tbody>
+</table>
+<p>\d is shorthand for the regular expression (0|1|2|3|4|5|6|7|8|9)</p>
+<p>[0-5] is shorthand for the regular expression (0|1|2|3|4|5)</p>
+<pre class="python"><code>xmasRegex = re.compile(r&#39;\d+\s\w+&#39;)
+xmasRegex.findall(&#39;12 drummers, 11 pipers, 10 lords, 9 ladies, 8 maids, 7 swans, 6 geese, 5 rings, 4 birds, 3 hens, 2 doves, 1 partridge&#39;)</code></pre>
+<pre><code>## [&#39;12 drummers&#39;, &#39;11 pipers&#39;, &#39;10 lords&#39;, &#39;9 ladies&#39;, &#39;8 maids&#39;, &#39;7 swans&#39;, &#39;6 geese&#39;, &#39;5 rings&#39;, &#39;4 birds&#39;, &#39;3 hens&#39;, &#39;2 doves&#39;, &#39;1 partridge&#39;]</code></pre>
+<div id="making-your-own-character-classes" class="section level4">
+<h4>Making Your Own Character Classes</h4>
+<p>[a-zA-Z0-9]會比對找出所有小寫字母,大寫字母或數字</p>
+<p>note: 在中括號內的普通正規表達式不會被解釋執行</p>
+<p>ex:[0-5.] 會比對找出0到5的數字和句點,我們不需要寫成 [0-5.]</p>
+<pre class="python"><code>vowelRegex = re.compile(r&#39;[aeiouAEIOU]&#39;)
+vowelRegex.findall(&#39;Robocop eats baby food. BABY FOOD.&#39;)</code></pre>
+<pre><code>## [&#39;o&#39;, &#39;o&#39;, &#39;o&#39;, &#39;e&#39;, &#39;a&#39;, &#39;a&#39;, &#39;o&#39;, &#39;o&#39;, &#39;A&#39;, &#39;O&#39;, &#39;O&#39;]</code></pre>
+<p>^ 可取得 比對找出不在這個字元分類以外的所有字元</p>
+<pre class="python"><code>consonantRegex = re.compile(r&#39;[^aeiouAEIOU]&#39;)
+consonantRegex.findall(&#39;Robocop eats baby food. BABY FOOD.&#39;)</code></pre>
+<pre><code>## [&#39;R&#39;, &#39;b&#39;, &#39;c&#39;, &#39;p&#39;, &#39; &#39;, &#39;t&#39;, &#39;s&#39;, &#39; &#39;, &#39;b&#39;, &#39;b&#39;, &#39;y&#39;, &#39; &#39;, &#39;f&#39;, &#39;d&#39;, &#39;.&#39;, &#39; &#39;, &#39;B&#39;, &#39;B&#39;, &#39;Y&#39;, &#39; &#39;, &#39;F&#39;, &#39;D&#39;, &#39;.&#39;]</code></pre>
+</div>
+<div id="the-and-characters" class="section level4">
+<h4>The ^ and $ Characters</h4>
+<p>r’^Hello’ 是要比對找出符合’Hello’為起始的字串</p>
+<pre class="python"><code>beginsWithHello = re.compile(r&#39;^Hello&#39;)
+beginsWithHello.search(&#39;Hello world!&#39;)</code></pre>
+<pre><code>## &lt;_sre.SRE_Match object; span=(0, 5), match=&#39;Hello&#39;&gt;</code></pre>
+<pre class="python"><code>beginsWithHello.search(&#39;He said hello.&#39;) == None</code></pre>
+<pre><code>## True</code></pre>
+<p>r’\d$’ 是要比對找出符合以數字0到9為結尾的字串</p>
+<pre class="python"><code>endsWithNumber = re.compile(r&#39;\d$&#39;)
+endsWithNumber.search(&#39;Your number is 42&#39;)</code></pre>
+<pre><code>## &lt;_sre.SRE_Match object; span=(16, 17), match=&#39;2&#39;&gt;</code></pre>
+<pre class="python"><code>endsWithNumber.search(&#39;Your number is forty two.&#39;) == None</code></pre>
+<pre><code>## True</code></pre>
+<p>r’^+$’ 是要比對找出至少一個符合以開頭到結尾都是數字0到9的字串</p>
+<pre class="python"><code>wholeStringIsNum = re.compile(r&#39;^\d+$&#39;)
+wholeStringIsNum.search(&#39;1234567890&#39;)</code></pre>
+<pre><code>## &lt;_sre.SRE_Match object; span=(0, 10), match=&#39;1234567890&#39;&gt;</code></pre>
+<pre class="python"><code>wholeStringIsNum.search(&#39;12345xyz67890&#39;) == None</code></pre>
+<pre><code>## True</code></pre>
+<pre class="python"><code>wholeStringIsNum.search(&#39;12 34567890&#39;) == None</code></pre>
+<pre><code>## True</code></pre>
+</div>
+<div id="the-wildcard-character-." class="section level4">
+<h4>The Wildcard Character 萬用字元.</h4>
+<p>. 子元是萬用字元,尋找除了換行符號的所有字元</p>
+<pre class="python"><code>atRegex = re.compile(r&#39;.at&#39;)
+atRegex.findall(&#39;The cat in the hat sat on the flat mat.&#39;)</code></pre>
+<pre><code>## [&#39;cat&#39;, &#39;hat&#39;, &#39;sat&#39;, &#39;lat&#39;, &#39;mat&#39;]</code></pre>
+</div>
+<div id="matching-everything-with-dot-star-." class="section level4">
+<h4>Matching Everything with Dot-Star 使用.*尋找所有字元</h4>
+<pre class="python"><code>nameRegex = re.compile(r&#39;First Name: (.*) Last Name: (.*)&#39;)
+mo = nameRegex.search(&#39;First Name: Al Last Name: Sweigart&#39;)
+mo.group(1)</code></pre>
+<pre><code>## &#39;Al&#39;</code></pre>
+<pre class="python"><code>mo.group(2)</code></pre>
+<pre><code>## &#39;Sweigart&#39;</code></pre>
+<p>greedy and non-greedy</p>
+<pre class="python"><code>nongreedyRegex = re.compile(r&#39;&lt;.*?&gt;&#39;)
+mo = nongreedyRegex.search(&#39;&lt;To serve man&gt; for dinner.&gt;&#39;)
+mo.group()
+</code></pre>
+<pre><code>## &#39;&lt;To serve man&gt;&#39;</code></pre>
+<pre class="python"><code>greedyRegex = re.compile(r&#39;&lt;.*&gt;&#39;)
+mo = greedyRegex.search(&#39;&lt;To serve man&gt; for dinner.&gt;&#39;)
+mo.group()</code></pre>
+<pre><code>## &#39;&lt;To serve man&gt; for dinner.&gt;&#39;</code></pre>
+</div>
+<div class="section level4">
+<h4>比對所有字元,包括換行字元</h4>
+<pre class="python"><code>noNewlineRegex = re.compile(&#39;.*&#39;)
+noNewlineRegex.search(&#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&#39;).group()
+</code></pre>
+<pre><code>## &#39;Serve the public trust.&#39;</code></pre>
+<pre class="python"><code>newlineRegex = re.compile(&#39;.*&#39;, re.DOTALL)
+newlineRegex.search(&#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&#39;).group()</code></pre>
+<pre><code>## &#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&#39;</code></pre>
+</div>
+<div class="section level4">
+<h4>比對時不區分大小寫</h4>
+<p>把re.I當作第2個引數傳入re.compile</p>
+<pre class="python"><code>robocop = re.compile(r&#39;robocop&#39;, re.I)
+robocop.search(&#39;Robocop is part man, part machine, all cop.&#39;).group()</code></pre>
+<pre><code>## &#39;Robocop&#39;</code></pre>
+<pre class="python"><code>robocop.search(&#39;ROBOCOP protects the innocent.&#39;).group()</code></pre>
+<pre><code>## &#39;ROBOCOP&#39;</code></pre>
+<pre class="python"><code>robocop.search(&#39;Al, why does your programming book talk about robocop so much?&#39;).group()</code></pre>
+<pre><code>## &#39;robocop&#39;</code></pre>
+</div>
+</div>
+<div id="sub" class="section level3">
+<h3>使用sub()方法取代字串</h3>
+<pre class="python"><code>namesRegex = re.compile(r&#39;Agent \w+&#39;)
+namesRegex.sub(&#39;CENSORED&#39;, &#39;Agent Alice gave the secret documents to Agent Bob.&#39;)</code></pre>
+<pre><code>## &#39;CENSORED gave the secret documents to CENSORED.&#39;</code></pre>
+</div>
+<div class="section level3">
+<h3>正規表達式中使用注釋</h3>
+<p>不+注釋:複雜的正規表達式會非常難以閱讀 phoneRegex = re.compile(r’((\d{3}|\(\))?(\s|-|\.)?\d{3}(\s|-|\.)\d{4}</p>
+<p>(\s<em>(ext|x|ext.)\s</em>\d{2,5})?)’)</p>
+<p>增加注釋:使用re.VERBOSE當作第2個引數傳入re.compile中</p>
+<pre><code>phoneRegex = re.compile(r&#39;&#39;&#39;(
+    (\d{3}|\(\d{3}\))?              # area code
+    (\s|-|\.)?                      # separator
+    \d{3}                           # first 3 digits
+    (\s|-|\.)                      # separator
+    \d{4}                           # last 4 digits
+    (\s*(ext|x|ext.)\s*\d{2,5})?  # extension
+     )&#39;&#39;&#39;, re.VERBOSE)
+     </code></pre>
+</div>
+<div id="-re.ignorecase-re.dotall-and-re.verbose" class="section level3">
+<h3>組合使用 re.IGNORECASE, re.DOTALL, and re.VERBOSE</h3>
+<p>想要使用re.VERBOSE增加注釋,還希望用re.IGNORECASE忽略大小寫,但是re.compile只接受一個值當作第二個引數</p>
+<p>想解決可使用(|)把re.IGNORECASE, re.DOTALL, and re.VERBOSE組合起來</p>
+<p>ex:早要不區分大小寫,且比對尋找時包含換行符號,且增加注釋,可以這樣寫:</p>
+<pre class="python"><code>
+someRegexValue = re.compile(&#39;foo&#39;, re.IGNORECASE | re.DOTALL | re.VERBOSE)</code></pre>
+</div>

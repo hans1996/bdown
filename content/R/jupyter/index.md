@@ -13,7 +13,6 @@ subtitle: Learn how to blog in Academic using Jupyter notebooks
 summary: Learn how to blog in Academic using Jupyter notebooks
 tags: []
 title: Display Jupyter Notebooks with Academic
-css: styles.css
 ---
 
 

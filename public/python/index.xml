@@ -278,6 +278,425 @@ Good job! You guessed my number in 5 guesses!
     </item>
     
     <item>
+      <title>regular-expression</title>
+      <link>/python/regular-expression/regular_expression/</link>
+      <pubDate>Mon, 05 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/python/regular-expression/regular_expression/</guid>
+      <description>
+
+
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;字元分類&lt;/th&gt;
+&lt;th&gt;表示&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\d&lt;/td&gt;
+&lt;td&gt;0-9的任何數字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\D&lt;/td&gt;
+&lt;td&gt;除了0-9的任何數字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\w&lt;/td&gt;
+&lt;td&gt;任何字母,數字或底線&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\W&lt;/td&gt;
+&lt;td&gt;除了字母,數字或底線以外的任何字元&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\s&lt;/td&gt;
+&lt;td&gt;空格,定位符號或換行符號&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\S&lt;/td&gt;
+&lt;td&gt;除了空格,定位符號或換行符號以外的任何字元&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;div class=&#34;book&#34;&gt;
+&lt;ul class=&#34;itemizedlist&#34;&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;?&lt;/code&gt; matches zero or one of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;*&lt;/code&gt; matches zero or more of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;+&lt;/code&gt; matches one or more of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;{n}&lt;/code&gt; matches exactly &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;n&lt;/em&gt;&lt;/span&gt; of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;{n,}&lt;/code&gt; matches &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;n&lt;/em&gt;&lt;/span&gt; or more of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;{,m}&lt;/code&gt; matches 0 to &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;m&lt;/em&gt;&lt;/span&gt; of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;{n,m}&lt;/code&gt; matches at least &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;n&lt;/em&gt;&lt;/span&gt; and at most &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;m&lt;/em&gt;&lt;/span&gt; of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+&lt;code class=&#34;literal1&#34;&gt;{n,m}?&lt;/code&gt; or &lt;code class=&#34;literal1&#34;&gt;*?&lt;/code&gt; or &lt;code class=&#34;literal1&#34;&gt;+?&lt;/code&gt; performs a nongreedy match of the preceding group.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+&lt;code class=&#34;literal1&#34;&gt;^spam&lt;/code&gt; means the string must begin with &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;spam&lt;/em&gt;&lt;/span&gt;.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+&lt;code class=&#34;literal1&#34;&gt;spam$&lt;/code&gt; means the string must end with &lt;span class=&#34;calibre1&#34;&gt;&lt;em class=&#34;calibre5&#34;&gt;spam&lt;/em&gt;&lt;/span&gt;.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li class=&#34;listitem&#34;&gt;
+&lt;p class=&#34;calibre4&#34;&gt;
+The &lt;code class=&#34;literal1&#34;&gt;.&lt;/code&gt; matches any character, except newline characters.
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;\d, \w, and \s match a digit, word, or space character, respectively.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;\D, \W, and \S match anything except a digit, word, or space character, respectively.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[abc] matches any character between the brackets (such as a, b, or c).&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;[^abc] matches any character that isn’t between the brackets.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;python--re&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;python 正規表達式 都在re模組&lt;/h3&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;import re&lt;/li&gt;
+&lt;li&gt;re.complie() 建立 Regex物件 (記得使用原始字串 (r))&lt;/li&gt;
+&lt;li&gt;對 Regex 物件的 search() 方法傳入想要尋找的字串,會返回一個Match物件&lt;/li&gt;
+&lt;li&gt;呼叫Match物件的group()方法,返回實際比對符合的字串&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import re
+
+phoneNumRegex = re.compile(r&amp;#39;\d\d\d-\d\d\d-\d\d\d\d&amp;#39;)
+mo = phoneNumRegex.search(&amp;#39;My number is 415-555-4242.&amp;#39;)
+print(&amp;#39;Phone number found: &amp;#39; + mo.group())&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Phone number found: 415-555-4242&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;我們想要把區域號碼從電話號碼中分開,可在正規表達式中加上括號來分組:&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;(\d\d\d)-(\d\d\d-\d\d\d\d)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;隨後使用 group() 方法從某個分組中取得比對符合的文字&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneNumRegex = re.compile(r&amp;#39;(\d\d\d)-(\d\d\d-\d\d\d\d)&amp;#39;)
+mo = phoneNumRegex.search(&amp;#39;My number is 415-555-4242.&amp;#39;)
+mo.group(1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;415&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group(2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group(0)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;415-555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;415-555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;想要一次取得所有的分組,可用groups()方法&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.groups()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## (&amp;#39;415&amp;#39;, &amp;#39;555-4242&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;areaCode,mainNumber = mo.groups()
+print(areaCode)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 415&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;print(mainNumber)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 555-4242&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;想要在字串中比對括號,使用&lt;code&gt;\(&lt;/code&gt; 和 &lt;code&gt;\)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;在傳入 re.compile()的原始字串內的&lt;code&gt;\(&lt;/code&gt; 和 &lt;code&gt;\)&lt;/code&gt;會變得實際比對()括號&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneNumRegex = re.compile(r&amp;#39;(\(\d\d\d\)) (\d\d\d-\d\d\d\d)&amp;#39;)
+mo = phoneNumRegex.search(&amp;#39;My phone number is (415) 555-4242.&amp;#39;)
+mo.group(1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;(415)&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group(2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;matching-multiple-groups-with-the-pipe&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Matching Multiple Groups with the Pipe&lt;/h4&gt;
+&lt;p&gt;正規表達式 r’Batman|Tina Fey’ 會比對 ‘Batman’ 或 ‘Tina Fey’&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;heroRegex = re.compile (r&amp;#39;Batman|Tina Fey&amp;#39;)
+mo1 = heroRegex.search(&amp;#39;Batman and Tina Fey.&amp;#39;)
+mo1.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;想要比對’Batman’, ‘Batmobile’, ‘Batcopter’, ‘Batbat’ 中任一個都符合,因為都以’Bat’開頭 所以只要指定一次前置文字即可,利用括號&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;batRegex = re.compile(r&amp;#39;Bat(man|mobile|copter|bat)&amp;#39;)
+mo = batRegex.search(&amp;#39;Batmobile lost a wheel&amp;#39;)
+mo.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batmobile&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group(1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;mobile&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;optional-matching-with-the-question-mark&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Optional Matching with the Question Mark&lt;/h4&gt;
+&lt;p&gt;問號表示無論內容是否存在,正規表達式都會比對符合&lt;/p&gt;
+&lt;p&gt;?字元表示他前面括號的分組在這模式中是可選擇性的&lt;/p&gt;
+&lt;p&gt;?字元可看成 &lt;strong&gt;這個問號前的分組比對符合1次或0次&lt;/strong&gt;都可以&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;batRegex = re.compile(r&amp;#39;Bat(wo)?man&amp;#39;)
+mo1 = batRegex.search(&amp;#39;The Adventures of Batman&amp;#39;)
+mo1.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo2 = batRegex.search(&amp;#39;The Adventures of Batwoman&amp;#39;)
+mo2.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batwoman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;用前面電話號碼來做說明,可在正規表達式中尋找含有區號和不含區號的電話號碼&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneRegex = re.compile(r&amp;#39;(\d\d\d-)?\d\d\d-\d\d\d\d&amp;#39;)
+mo1 = phoneRegex.search(&amp;#39;My number is 415-555-4242&amp;#39;)
+mo1.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;415-555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo2 = phoneRegex.search(&amp;#39;My number is 555-4242&amp;#39;)
+mo2.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;555-4242&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;matching-zero-or-more-with-the-star&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Matching Zero or More with the Star&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;* &lt;/strong&gt;字元可看成 &lt;strong&gt;這個星號前的分組比對符合多次或0次&lt;/strong&gt;都可以&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;batRegex = re.compile(r&amp;#39;Bat(wo)*man&amp;#39;)
+mo1 = batRegex.search(&amp;#39;The Adventures of Batman&amp;#39;)
+mo1.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo2 = batRegex.search(&amp;#39;The Adventures of Batwoman&amp;#39;)
+mo2.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batwoman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo3 = batRegex.search(&amp;#39;The Adventures of Batwowowowoman&amp;#39;)
+mo3.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batwowowowoman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;matching-one-or-more-with-the-plus&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Matching One or More with the Plus&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;+&lt;/strong&gt;字元可看成 &lt;strong&gt;這個+前的分組比對符合多次或1次&lt;/strong&gt;都可以&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;batRegex = re.compile(r&amp;#39;Bat(wo)+man&amp;#39;)
+mo1 = batRegex.search(&amp;#39;The Adventures of Batwoman&amp;#39;)
+mo1.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batwoman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo2 = batRegex.search(&amp;#39;The Adventures of Batwowowowoman&amp;#39;)
+mo2.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Batwowowowoman&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo3 = batRegex.search(&amp;#39;The Adventures of Batman&amp;#39;)
+mo3 == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;matching-specific-repetitions-with-curly-brackets&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Matching Specific Repetitions with Curly Brackets(大括號)&lt;/h4&gt;
+&lt;p&gt;(Ha){3} 與 (Ha)(Ha)(Ha) 表達意思相同&lt;/p&gt;
+&lt;p&gt;(Ha){3,5} 與 ((Ha)(Ha)(Ha))|((Ha)(Ha)(Ha)(Ha))|((Ha)(Ha)(Ha)(Ha)(Ha)) 表達意思相同&lt;/p&gt;
+&lt;p&gt;(Ha){3,} 表示比對符合至少3次以上&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;haRegex = re.compile(r&amp;#39;(Ha){3}&amp;#39;)
+mo1 = haRegex.search(&amp;#39;HaHaHa&amp;#39;)
+mo1.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;HaHaHa&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo2 = haRegex.search(&amp;#39;Ha&amp;#39;)
+mo2 == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;greedy-and-nongreedy-matching&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Greedy and Nongreedy Matching&lt;/h4&gt;
+&lt;p&gt;python 正規表達式預設是greedy版本,就是盡可能找到最長符合比對的字串&lt;/p&gt;
+&lt;p&gt;在大括弧後面加上一個問號,大括弧的non-greedy版本會盡可能找到最短符合比對的字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;greedyHaRegex = re.compile(r&amp;#39;(Ha){3,5}&amp;#39;)
+mo1 = greedyHaRegex.search(&amp;#39;HaHaHaHaHa&amp;#39;)
+mo1.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;HaHaHaHaHa&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;nongreedyHaRegex = re.compile(r&amp;#39;(Ha){3,5}?&amp;#39;)
+mo2 = nongreedyHaRegex.search(&amp;#39;HaHaHaHaHa&amp;#39;)
+mo2.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;HaHaHa&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-findall-method&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;The findall() Method&lt;/h4&gt;
+&lt;p&gt;search()方法會返回一個match物件,此物件內含有尋找比對字串中&lt;strong&gt;第一次&lt;/strong&gt;找到符合的文字&lt;/p&gt;
+&lt;p&gt;findall()方法則返回一組list,這組list為尋找比對字串中&lt;strong&gt;所有&lt;/strong&gt;符合的文字內容&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneNumRegex = re.compile(r&amp;#39;\d\d\d-\d\d\d-\d\d\d\d&amp;#39;)
+mo = phoneNumRegex.search(&amp;#39;Cell: 415-555-9999 Work: 212-555-0000&amp;#39;)
+mo.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;415-555-9999&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneNumRegex = re.compile(r&amp;#39;\d\d\d-\d\d\d-\d\d\d\d&amp;#39;) # has no groups
+phoneNumRegex.findall(&amp;#39;Cell: 415-555-9999 Work: 212-555-0000&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;415-555-9999&amp;#39;, &amp;#39;212-555-0000&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;如果有分組,那findall會返回一個多元組(list of tuples)的list,每個多元組代表一個比對符合的內容&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;phoneNumRegex = re.compile(r&amp;#39;(\d\d\d)-(\d\d\d)-(\d\d\d\d)&amp;#39;) # has groups
+phoneNumRegex.findall(&amp;#39;Cell: 415-555-9999 Work: 212-555-0000&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [(&amp;#39;415&amp;#39;, &amp;#39;555&amp;#39;, &amp;#39;9999&amp;#39;), (&amp;#39;212&amp;#39;, &amp;#39;555&amp;#39;, &amp;#39;0000&amp;#39;)]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;character-classes&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Character Classes&lt;/h3&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr class=&#34;header&#34;&gt;
+&lt;th&gt;字元分類&lt;/th&gt;
+&lt;th&gt;表示&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\d&lt;/td&gt;
+&lt;td&gt;0-9的任何數字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\D&lt;/td&gt;
+&lt;td&gt;除了0-9的任何數字&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\w&lt;/td&gt;
+&lt;td&gt;任何字母,數字或底線&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\W&lt;/td&gt;
+&lt;td&gt;除了字母,數字或底線以外的任何字元&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;odd&#34;&gt;
+&lt;td&gt;\s&lt;/td&gt;
+&lt;td&gt;空格,定位符號或換行符號&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr class=&#34;even&#34;&gt;
+&lt;td&gt;\S&lt;/td&gt;
+&lt;td&gt;除了空格,定位符號或換行符號以外的任何字元&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;\d is shorthand for the regular expression (0|1|2|3|4|5|6|7|8|9)&lt;/p&gt;
+&lt;p&gt;[0-5] is shorthand for the regular expression (0|1|2|3|4|5)&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;xmasRegex = re.compile(r&amp;#39;\d+\s\w+&amp;#39;)
+xmasRegex.findall(&amp;#39;12 drummers, 11 pipers, 10 lords, 9 ladies, 8 maids, 7 swans, 6 geese, 5 rings, 4 birds, 3 hens, 2 doves, 1 partridge&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;12 drummers&amp;#39;, &amp;#39;11 pipers&amp;#39;, &amp;#39;10 lords&amp;#39;, &amp;#39;9 ladies&amp;#39;, &amp;#39;8 maids&amp;#39;, &amp;#39;7 swans&amp;#39;, &amp;#39;6 geese&amp;#39;, &amp;#39;5 rings&amp;#39;, &amp;#39;4 birds&amp;#39;, &amp;#39;3 hens&amp;#39;, &amp;#39;2 doves&amp;#39;, &amp;#39;1 partridge&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;making-your-own-character-classes&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Making Your Own Character Classes&lt;/h4&gt;
+&lt;p&gt;[a-zA-Z0-9]會比對找出所有小寫字母,大寫字母或數字&lt;/p&gt;
+&lt;p&gt;note: 在中括號內的普通正規表達式不會被解釋執行&lt;/p&gt;
+&lt;p&gt;ex:[0-5.] 會比對找出0到5的數字和句點,我們不需要寫成 [0-5.]&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;vowelRegex = re.compile(r&amp;#39;[aeiouAEIOU]&amp;#39;)
+vowelRegex.findall(&amp;#39;Robocop eats baby food. BABY FOOD.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;o&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;e&amp;#39;, &amp;#39;a&amp;#39;, &amp;#39;a&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;o&amp;#39;, &amp;#39;A&amp;#39;, &amp;#39;O&amp;#39;, &amp;#39;O&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;^ 可取得 比對找出不在這個字元分類以外的所有字元&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;consonantRegex = re.compile(r&amp;#39;[^aeiouAEIOU]&amp;#39;)
+consonantRegex.findall(&amp;#39;Robocop eats baby food. BABY FOOD.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;R&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;c&amp;#39;, &amp;#39;p&amp;#39;, &amp;#39; &amp;#39;, &amp;#39;t&amp;#39;, &amp;#39;s&amp;#39;, &amp;#39; &amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;b&amp;#39;, &amp;#39;y&amp;#39;, &amp;#39; &amp;#39;, &amp;#39;f&amp;#39;, &amp;#39;d&amp;#39;, &amp;#39;.&amp;#39;, &amp;#39; &amp;#39;, &amp;#39;B&amp;#39;, &amp;#39;B&amp;#39;, &amp;#39;Y&amp;#39;, &amp;#39; &amp;#39;, &amp;#39;F&amp;#39;, &amp;#39;D&amp;#39;, &amp;#39;.&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-and-characters&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;The ^ and $ Characters&lt;/h4&gt;
+&lt;p&gt;r’^Hello’ 是要比對找出符合’Hello’為起始的字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;beginsWithHello = re.compile(r&amp;#39;^Hello&amp;#39;)
+beginsWithHello.search(&amp;#39;Hello world!&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;lt;_sre.SRE_Match object; span=(0, 5), match=&amp;#39;Hello&amp;#39;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;beginsWithHello.search(&amp;#39;He said hello.&amp;#39;) == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;r’\d$’ 是要比對找出符合以數字0到9為結尾的字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;endsWithNumber = re.compile(r&amp;#39;\d$&amp;#39;)
+endsWithNumber.search(&amp;#39;Your number is 42&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;lt;_sre.SRE_Match object; span=(16, 17), match=&amp;#39;2&amp;#39;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;endsWithNumber.search(&amp;#39;Your number is forty two.&amp;#39;) == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;r’^+$’ 是要比對找出至少一個符合以開頭到結尾都是數字0到9的字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;wholeStringIsNum = re.compile(r&amp;#39;^\d+$&amp;#39;)
+wholeStringIsNum.search(&amp;#39;1234567890&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;lt;_sre.SRE_Match object; span=(0, 10), match=&amp;#39;1234567890&amp;#39;&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;wholeStringIsNum.search(&amp;#39;12345xyz67890&amp;#39;) == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;wholeStringIsNum.search(&amp;#39;12 34567890&amp;#39;) == None&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;the-wildcard-character-.&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;The Wildcard Character 萬用字元.&lt;/h4&gt;
+&lt;p&gt;. 子元是萬用字元,尋找除了換行符號的所有字元&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;atRegex = re.compile(r&amp;#39;.at&amp;#39;)
+atRegex.findall(&amp;#39;The cat in the hat sat on the flat mat.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;cat&amp;#39;, &amp;#39;hat&amp;#39;, &amp;#39;sat&amp;#39;, &amp;#39;lat&amp;#39;, &amp;#39;mat&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;matching-everything-with-dot-star-.&#34; class=&#34;section level4&#34;&gt;
+&lt;h4&gt;Matching Everything with Dot-Star 使用.*尋找所有字元&lt;/h4&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;nameRegex = re.compile(r&amp;#39;First Name: (.*) Last Name: (.*)&amp;#39;)
+mo = nameRegex.search(&amp;#39;First Name: Al Last Name: Sweigart&amp;#39;)
+mo.group(1)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Al&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;mo.group(2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Sweigart&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;greedy and non-greedy&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;nongreedyRegex = re.compile(r&amp;#39;&amp;lt;.*?&amp;gt;&amp;#39;)
+mo = nongreedyRegex.search(&amp;#39;&amp;lt;To serve man&amp;gt; for dinner.&amp;gt;&amp;#39;)
+mo.group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;&amp;lt;To serve man&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;greedyRegex = re.compile(r&amp;#39;&amp;lt;.*&amp;gt;&amp;#39;)
+mo = greedyRegex.search(&amp;#39;&amp;lt;To serve man&amp;gt; for dinner.&amp;gt;&amp;#39;)
+mo.group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;&amp;lt;To serve man&amp;gt; for dinner.&amp;gt;&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level4&#34;&gt;
+&lt;h4&gt;比對所有字元,包括換行字元&lt;/h4&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;noNewlineRegex = re.compile(&amp;#39;.*&amp;#39;)
+noNewlineRegex.search(&amp;#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&amp;#39;).group()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Serve the public trust.&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;newlineRegex = re.compile(&amp;#39;.*&amp;#39;, re.DOTALL)
+newlineRegex.search(&amp;#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&amp;#39;).group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Serve the public trust.\nProtect the innocent.\nUphold the law.&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level4&#34;&gt;
+&lt;h4&gt;比對時不區分大小寫&lt;/h4&gt;
+&lt;p&gt;把re.I當作第2個引數傳入re.compile&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;robocop = re.compile(r&amp;#39;robocop&amp;#39;, re.I)
+robocop.search(&amp;#39;Robocop is part man, part machine, all cop.&amp;#39;).group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Robocop&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;robocop.search(&amp;#39;ROBOCOP protects the innocent.&amp;#39;).group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;ROBOCOP&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;robocop.search(&amp;#39;Al, why does your programming book talk about robocop so much?&amp;#39;).group()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;robocop&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sub&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;使用sub()方法取代字串&lt;/h3&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;namesRegex = re.compile(r&amp;#39;Agent \w+&amp;#39;)
+namesRegex.sub(&amp;#39;CENSORED&amp;#39;, &amp;#39;Agent Alice gave the secret documents to Agent Bob.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;CENSORED gave the secret documents to CENSORED.&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level3&#34;&gt;
+&lt;h3&gt;正規表達式中使用注釋&lt;/h3&gt;
+&lt;p&gt;不+注釋:複雜的正規表達式會非常難以閱讀 phoneRegex = re.compile(r’((\d{3}|\(\))?(\s|-|\.)?\d{3}(\s|-|\.)\d{4}&lt;/p&gt;
+&lt;p&gt;(\s&lt;em&gt;(ext|x|ext.)\s&lt;/em&gt;\d{2,5})?)’)&lt;/p&gt;
+&lt;p&gt;增加注釋:使用re.VERBOSE當作第2個引數傳入re.compile中&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;phoneRegex = re.compile(r&amp;#39;&amp;#39;&amp;#39;(
+    (\d{3}|\(\d{3}\))?              # area code
+    (\s|-|\.)?                      # separator
+    \d{3}                           # first 3 digits
+    (\s|-|\.)                      # separator
+    \d{4}                           # last 4 digits
+    (\s*(ext|x|ext.)\s*\d{2,5})?  # extension
+     )&amp;#39;&amp;#39;&amp;#39;, re.VERBOSE)
+     &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;-re.ignorecase-re.dotall-and-re.verbose&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;組合使用 re.IGNORECASE, re.DOTALL, and re.VERBOSE&lt;/h3&gt;
+&lt;p&gt;想要使用re.VERBOSE增加注釋,還希望用re.IGNORECASE忽略大小寫,但是re.compile只接受一個值當作第二個引數&lt;/p&gt;
+&lt;p&gt;想解決可使用(|)把re.IGNORECASE, re.DOTALL, and re.VERBOSE組合起來&lt;/p&gt;
+&lt;p&gt;ex:早要不區分大小寫,且比對尋找時包含換行符號,且增加注釋,可以這樣寫:&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;
+someRegexValue = re.compile(&amp;#39;foo&amp;#39;, re.IGNORECASE | re.DOTALL | re.VERBOSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>list</title>
       <link>/python/list/</link>
       <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
