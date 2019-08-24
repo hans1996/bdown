@@ -106,6 +106,123 @@
     </item>
     
     <item>
+      <title>檔案操作</title>
+      <link>/python/file/file/</link>
+      <pubDate>Sun, 25 Aug 2019 00:00:00 +0000</pubDate>
+      <guid>/python/file/file/</guid>
+      <description>
+
+
+&lt;p&gt;將檔案的路徑上資料夾名稱的字串傳入,os.path.join 會返回檔案路徑的字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import os
+os.path.join(&amp;#39;usr&amp;#39;, &amp;#39;bin&amp;#39;, &amp;#39;spam&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;usr\\bin\\spam&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;myFiles = [&amp;#39;accounts.txt&amp;#39;, &amp;#39;details.csv&amp;#39;, &amp;#39;invite.docx&amp;#39;]
+for filename in myFiles:
+    print(os.path.join(&amp;#39;C:\\Users\\asweigart&amp;#39;, filename))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## C:\Users\asweigart\accounts.txt
+## C:\Users\asweigart\details.csv
+## C:\Users\asweigart\invite.docx&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;目前的工作目錄&lt;/h2&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;import os
+os.getcwd()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\r_web\\blogdown\\content\\Python\\file&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;切換目前的工作目錄&lt;/h2&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.chdir(&amp;#39;C:\\Windows\\System32&amp;#39;)
+os.getcwd()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\Windows\\System32&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;建立新的資料夾&lt;/h2&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.makedirs(&amp;#39;C:\\delicious\\walnut\\waffle&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;os.path-&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;os.path 模組&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;os.path.abspath(path)&lt;/code&gt; 會返回引數的絕對路徑&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;os.path.isabs(path)&lt;/code&gt; 如果引數為絕對路徑則返回TRUE,相對路徑返回False&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;os.path.relpath(path, start)&lt;/code&gt; 會返回從&lt;code&gt;start&lt;/code&gt;路徑到&lt;code&gt;path&lt;/code&gt;的相對路徑的字串,如果沒有傳入start,就使用目前的工作目錄&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.abspath(&amp;#39;.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\r_web\\blogdown\\content\\Python\\file&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.abspath(&amp;#39;.\\Scripts&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\r_web\\blogdown\\content\\Python\\file\\Scripts&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isabs(&amp;#39;.&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## False&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isabs(os.path.abspath(&amp;#39;.&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.relpath(&amp;#39;C:\\Windows&amp;#39;, &amp;#39;C:\\&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;Windows&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.relpath(&amp;#39;C:\\Windows&amp;#39;, &amp;#39;C:\\spam\\eggs&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;..\\..\\Windows&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.getcwd() &lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\r_web\\blogdown\\content\\Python\\file&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;os.path.dirnames(path)&lt;/code&gt; 會返回一個字串,該字串含有&lt;code&gt;path&lt;/code&gt;引數中最後一個反斜線之前的所有路徑內容&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;os.path.basename(path)&lt;/code&gt; 會返回一個字串,該字串含有&lt;code&gt;path&lt;/code&gt;引數中最後一個反斜線之後的所有路徑內容&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;os.path.split()&lt;/code&gt; 會返回一個tuple, 包含路徑名稱和檔案名稱&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;path = &amp;#39;C:\\Windows\\System32\\calc.exe&amp;#39;
+
+os.path.dirname(path)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;C:\\Windows\\System32&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.basename(path)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## &amp;#39;calc.exe&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;calcFilePath = &amp;#39;C:\\Windows\\System32\\calc.exe&amp;#39;
+os.path.split(calcFilePath)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## (&amp;#39;C:\\Windows\\System32&amp;#39;, &amp;#39;calc.exe&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;os.path.split()&lt;/code&gt; 沒有辦法把一個檔案路經照每個資料夾分割開, 但可用&lt;code&gt;split()&lt;/code&gt;字串方法將&lt;code&gt;os.path.sep&lt;/code&gt;中的字串進行分割&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;calcFilePath.split(os.path.sep)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;C:&amp;#39;, &amp;#39;Windows&amp;#39;, &amp;#39;System32&amp;#39;, &amp;#39;calc.exe&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 linux 中系統返回字串的第一個項目是空字串&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;&amp;#39;/usr/bin&amp;#39;.split(os.path.sep)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [&amp;#39;/usr/bin&amp;#39;]&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;找出檔案大小和資料夾內容&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Calling &lt;code&gt;os.path.getsize(path)&lt;/code&gt; will return the size in bytes of the file in the path argument.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Calling &lt;code&gt;os.listdir(path)&lt;/code&gt; 會返回檔案名稱的串列,該串列為&lt;code&gt;path&lt;/code&gt;引數下的所有檔案 (Note that this function is in the os module, not os.path.)&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.getsize(&amp;#39;C:\\Windows\\System32\\calc.exe&amp;#39;)
+
+#os.listdir(&amp;#39;C:\\Windows\\System32&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 27648&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;想知道某個目錄下所有檔案的大小位元數,可同時使用&lt;code&gt;os.path.getsize()&lt;/code&gt; and &lt;code&gt;os.listdir()&lt;/code&gt;&lt;/p&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;totalSize = 0
+for filename in os.listdir(&amp;#39;C:\\Windows\\System32&amp;#39;):
+    totalSize = totalSize + os.path.getsize(os.path.join(&amp;#39;C:\\Windows\\System32&amp;#39;, filename))
+
+print(totalSize)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 2356979478&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class=&#34;section level2&#34;&gt;
+&lt;h2&gt;檢查路徑是否存在&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Calling os.path.exists(path) will return True if the file or folder referred to in the argument exists and will return False if it does not exist.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Calling os.path.isfile(path) will return True if the path argument exists and is a file and will return False otherwise.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Calling os.path.isdir(path) will return True if the path argument exists and is a folder and will return False otherwise.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.exists(&amp;#39;C:\\Windows&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.exists(&amp;#39;C:\\some_made_up_folder&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## False&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isdir(&amp;#39;C:\\Windows\\System32&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isfile(&amp;#39;C:\\Windows\\System32&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## False&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isdir(&amp;#39;C:\\Windows\\System32\\calc.exe&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## False&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;python&#34;&gt;&lt;code&gt;os.path.isfile(&amp;#39;C:\\Windows\\System32\\calc.exe&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## True&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>function</title>
       <link>/python/function/</link>
       <pubDate>Mon, 12 Aug 2019 00:00:00 +0000</pubDate>
@@ -2520,6 +2637,24 @@ print()
 
 &lt;pre&gt;&lt;code&gt;24/160 25/160 31/160 31/160 25/160 24/160 
 &lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Privacy Policy</title>
+      <link>/privacy/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/privacy/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Terms</title>
+      <link>/terms/</link>
+      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
+      <guid>/terms/</guid>
+      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
 </description>
     </item>
     
