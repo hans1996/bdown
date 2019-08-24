@@ -1,0 +1,143 @@
+
+---
+authors:
+- admin
+categories: []
+date: "2019-08-25T00:00:00Z"
+draft: false
+featured: false
+image:
+  caption: ""
+  focal_point: ""
+projects: []
+subtitle: 檔案操作
+summary: 檔案操作
+tags: []
+title: 檔案操作
+---
+
+將檔案的路徑上資料夾名稱的字串傳入,os.path.join 會返回檔案路徑的字串
+```{python}
+import os
+os.path.join('usr', 'bin', 'spam')
+```
+
+```{python}
+myFiles = ['accounts.txt', 'details.csv', 'invite.docx']
+for filename in myFiles:
+    print(os.path.join('C:\\Users\\asweigart', filename))
+```
+
+## 目前的工作目錄
+```{python}
+import os
+os.getcwd()
+
+```
+## 切換目前的工作目錄
+```{python}
+os.chdir('C:\\Windows\\System32')
+os.getcwd()
+```
+
+## 建立新的資料夾
+```{python}
+os.makedirs('C:\\delicious\\walnut\\waffle')
+```
+
+## os.path 模組 
++  `os.path.abspath(path)` 會返回引數的絕對路徑
++  `os.path.isabs(path)`   如果引數為絕對路徑則返回TRUE,相對路徑返回False
++  `os.path.relpath(path, start)` 會返回從`start`路徑到`path`的相對路徑的字串,如果沒有傳入start,就使用目前的工作目錄
+```{python}
+os.path.abspath('.')
+
+os.path.abspath('.\\Scripts')
+os.path.isabs('.')
+
+os.path.isabs(os.path.abspath('.'))
+```
+
+```{python}
+os.path.relpath('C:\\Windows', 'C:\\')
+
+os.path.relpath('C:\\Windows', 'C:\\spam\\eggs')
+
+os.getcwd() 
+```
+
+
+
++  `os.path.dirnames(path)` 會返回一個字串,該字串含有`path`引數中最後一個反斜線之前的所有路徑內容
+
++  `os.path.basename(path)` 會返回一個字串,該字串含有`path`引數中最後一個反斜線之後的所有路徑內容
+
++  `os.path.split()` 會返回一個tuple, 包含路徑名稱和檔案名稱 
+
+
+
+
+```{python}
+path = 'C:\\Windows\\System32\\calc.exe'
+
+os.path.dirname(path)
+os.path.basename(path)
+calcFilePath = 'C:\\Windows\\System32\\calc.exe'
+os.path.split(calcFilePath)
+```
+
+
+`os.path.split()` 沒有辦法把一個檔案路經照每個資料夾分割開,
+但可用`split()`字串方法將`os.path.sep`中的字串進行分割
+
+```{python}
+calcFilePath.split(os.path.sep)
+```
+在 linux 中系統返回字串的第一個項目是空字串
+```{python}
+'/usr/bin'.split(os.path.sep)
+```
+
+##  找出檔案大小和資料夾內容
+
++  Calling `os.path.getsize(path)` will return the size in bytes of the file in the path argument.
+
++  Calling `os.listdir(path)` 會返回檔案名稱的串列,該串列為`path`引數下的所有檔案 (Note that this function is in the os module, not os.path.)
+
+```{python}
+os.path.getsize('C:\\Windows\\System32\\calc.exe')
+
+#os.listdir('C:\\Windows\\System32')
+```
+
+想知道某個目錄下所有檔案的大小位元數,可同時使用`os.path.getsize()` and `os.listdir()`
+```{python}
+totalSize = 0
+for filename in os.listdir('C:\\Windows\\System32'):
+    totalSize = totalSize + os.path.getsize(os.path.join('C:\\Windows\\System32', filename))
+
+print(totalSize)
+```
+
+##  檢查路徑是否存在
+
++  Calling os.path.exists(path) will return True if the file or folder referred to in the argument exists and will return False if it does not exist.
+
++  Calling os.path.isfile(path) will return True if the path argument exists and is a file and will return False otherwise.
+
++  Calling os.path.isdir(path) will return True if the path argument exists and is a folder and will return False otherwise.
+```{python}
+os.path.exists('C:\\Windows')
+
+os.path.exists('C:\\some_made_up_folder')
+
+os.path.isdir('C:\\Windows\\System32')
+
+os.path.isfile('C:\\Windows\\System32')
+
+os.path.isdir('C:\\Windows\\System32\\calc.exe')
+
+os.path.isfile('C:\\Windows\\System32\\calc.exe')
+```
+
+

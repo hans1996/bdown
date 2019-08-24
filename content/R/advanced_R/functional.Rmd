@@ -355,6 +355,8 @@ dir(temp)
 <p>The first form is analogous to the <code>map()</code> family. The second and third forms are equivalent to the <code>imap()</code> family which allows you to iterate over the values and the indices of a vector in parallel.</p>
 <p><code>imap()</code> is like <code>map2()</code> in the sense that your <code>.f</code> gets called with two arguments, but here both are derived from the vector. <code>imap(x, f)</code> is equivalent to <code>map2(x, names(x), f)</code> if x has names, and <code>map2(x, seq_along(x), f)</code> if it does not.</p>
 <p><code>imap()</code> is often useful for constructing labels:</p>
+
+In the formula interface, `.x` refers to the list elements and `.y` refers to the names of the list.
 ```{r}
 imap_chr(iris, ~ paste0("The first value of ", .y, " is ", .x[[1]]))
 ```
