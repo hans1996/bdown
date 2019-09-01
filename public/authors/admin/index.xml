@@ -898,6 +898,1316 @@ gen
 
 &lt;pre&gt;&lt;code&gt;&amp;lt;generator object _make_gen at 0x00000197A7A685C8&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;返回值-2&#34;&gt;返回值&lt;/h2&gt;
+
+&lt;p&gt;When creating a function using the def statement, you can specify what the return value should be with a return statement. A return statement consists of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The return keyword&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value or expression that the function should return 函數要返回的值或表示式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+import random
+def getAnswer(answerNumber):
+if answerNumber == 1:
+    return &#39;It is certain&#39;
+elif answerNumber == 2:
+    return &#39;It is decidedly so&#39;
+elif answerNumber == 3:
+    return &#39;Yes&#39;
+elif answerNumber == 4:
+    return &#39;Reply hazy try again&#39;
+elif answerNumber == 5:
+    return &#39;Ask again later&#39;
+elif answerNumber == 6:
+    return &#39;Concentrate and ask again&#39;
+elif answerNumber == 7:
+    return &#39;My reply is no&#39;
+elif answerNumber == 8:
+    return &#39;Outlook not so good&#39;
+elif answerNumber == 9:
+    return &#39;Very doubtful&#39;
+
+r = random.randint(1, 9)
+fortune = getAnswer(r)
+print(fortune)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is decidedly so&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;# NONE 值&lt;/p&gt;
+
+&lt;p&gt;print 值 返回 None
+ 如同 r 的 side effect
+ 對於有沒有寫return陳述句的函數,python都會加上return None&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;spam = print(&#39;Hello!&#39;)
+None == spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello!
+
+
+
+
+
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;區域變數不能使用在全域作用範圍內-2&#34;&gt;區域變數不能使用在全域作用範圍內&lt;/h2&gt;
+
+&lt;p&gt;(跟r一樣)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 31337
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-8-c77831cffe5d&amp;gt; in &amp;lt;module&amp;gt;()
+      2     eggs = 31337
+      3 spam()
+----&amp;gt; 4 print(eggs)
+
+
+NameError: name &#39;eggs&#39; is not defined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;local-scopes-cannot-use-variables-in-other-local-scopes-2&#34;&gt;Local Scopes Cannot Use Variables in Other Local Scopes&lt;/h2&gt;
+
+&lt;p&gt;The upshot is that local variables in one function are completely separate from the local variables in another function.&lt;/p&gt;
+
+&lt;p&gt;某個函式中的區域變數與其他函式中的區域變數是完全分開來的,就算名稱相同也完全不相干&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 99
+    bacon()
+    print(eggs)
+def bacon():
+    ham = 101
+    eggs = 0
+    
+spam()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;99
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gobal-陳述句-2&#34;&gt;gobal 陳述句&lt;/h2&gt;
+
+&lt;p&gt;If you need to modify a global variable from within a function, use the global statement. If you have a line such as global eggs at the top of a function, it tells Python, “In this function, eggs refers to the global variable, so don’t create a local variable with this name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs
+    eggs = &#39;spam&#39;
+
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are four rules to tell whether a variable is in a local scope or global scope:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;If a variable is being used in the global scope (that is, outside of all functions), then it is always a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If there is a global statement for that variable in a function, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise, if the variable is used in an assignment statement in the function, it is a local variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;But if the variable is not used in an assignment statement, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs    
+    eggs = &#39;spam&#39; # this is the global
+def bacon():
+    eggs = &#39;bacon&#39; # this is a local
+def ham():
+    print(eggs) # this is the global
+eggs = 42 # this is the global
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the spam() function, eggs is the global eggs variable, because there’s a global statement for eggs at the beginning of the function &lt;code&gt;1&lt;/code&gt;. In bacon(), eggs is a local variable, because there’s an assignment statement for it in that function &lt;code&gt;2&lt;/code&gt;. In ham() &lt;code&gt;3&lt;/code&gt;, eggs is the global variable, because there is no assignment statement or global statement for it in that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;例外處理-2&#34;&gt;例外處理&lt;/h2&gt;
+
+&lt;p&gt;python 程式中若有錯誤(error),或例外(exception)導致整個程式當掉,而我們並不希望發生這樣的事&lt;/p&gt;
+
+&lt;p&gt;ｅｘ：［除以０］&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    return 42 / divideBy
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+
+
+
+---------------------------------------------------------------------------
+
+ZeroDivisionError                         Traceback (most recent call last)
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in &amp;lt;module&amp;gt;()
+      4 print(spam(2))
+      5 print(spam(12))
+----&amp;gt; 6 print(spam(0))
+      7 print(spam(1))
+
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in spam(divideBy)
+      1 def spam(divideBy):
+----&amp;gt; 2     return 42 / divideBy
+      3 
+      4 print(spam(2))
+      5 print(spam(12))
+
+
+ZeroDivisionError: division by zero
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;利用try和except陳述句來處理,把有可能出錯的陳述句放在try子句當中,&lt;/p&gt;
+
+&lt;p&gt;當錯誤發生時,程式的執行會跳到接下來的except子句起始處&lt;/p&gt;
+
+&lt;p&gt;把前面除以0的程式碼放在try子句中,而except子句中寫入程式碼來處理錯誤發生時想要做的事&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    try:
+        return 42 / divideBy
+    except ZeroDivisionError:
+        print(&#39;Error: Invalid argument.&#39;)
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+Error: Invalid argument.
+None
+42.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;小型例子-猜數字遊戲-2&#34;&gt;小型例子 :猜數字遊戲&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# This is a guess the number game.
+import random
+secretNumber = random.randint(1, 20)
+print(&#39;I am thinking of a number between 1 and 20.&#39;)
+
+# Ask the player to guess 6 times.
+for guessesTaken in range(1, 7):
+    print(&#39;Take a guess.&#39;)
+    guess = int(input())
+
+    if guess &amp;lt; secretNumber:
+        print(&#39;Your guess is too low.&#39;)
+    elif guess &amp;gt; secretNumber:
+        print(&#39;Your guess is too high.&#39;)
+    else:
+        break    # This condition is the correct guess!
+
+if guess == secretNumber:
+    print(&#39;Good job! You guessed my number in &#39; + str(guessesTaken) + &#39; guesses!&#39;)
+else:
+    print(&#39;Nope. The number I was thinking of was &#39; + str(secretNumber))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;I am thinking of a number between 1 and 20.
+Take a guess.
+10
+Your guess is too high.
+Take a guess.
+1
+Your guess is too low.
+Take a guess.
+5
+Your guess is too low.
+Take a guess.
+8
+Your guess is too low.
+Take a guess.
+9
+Good job! You guessed my number in 5 guesses!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;多個回傳值-1&#34;&gt;多個回傳值&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def f():
+    a = 5
+    b = 6
+    c = 7
+    return a,b,c
+
+return_value = f()
+
+# return value 就是3-tuple
+return_value
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;(5, 6, 7)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一種方法回傳多個值,就是回傳dict:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def f():
+    a = 5
+    b = 6
+    c = 7
+    return{&#39;a&#39;: a ,&#39;b&#39;: b ,&#39;c&#39;: c}
+
+return_value = f()
+
+return_value
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;{&#39;a&#39;: 5, &#39;b&#39;: 6, &#39;c&#39;: 7}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;functions-are-objects-1&#34;&gt;Functions Are Objects&lt;/h2&gt;
+
+&lt;p&gt;假設我們要對以下字串list做一些清理和轉換的工作,像是去除空白,刪除標點符號,統一大小寫等&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+
+
+states = [&#39; Alabama &#39;, &#39;Georgia!&#39;, &#39;Georgia&#39;, &#39;georgia&#39;, &#39;FlOrIda&#39;,&#39;south carolina##&#39;, &#39;West virginia?&#39;]
+
+import re
+def clean_strings(strings):
+    result = []
+    for value in strings:
+        value = value.strip()                  #刪除空白
+        value = re.sub(&#39;[!#?]&#39;, &#39;&#39;, value)     #替換特殊符號
+        value = value.title()                  #title() 方法返回&amp;quot;标题化&amp;quot;的字符串,就是说所有单词都是以大写开始
+        result.append(value)
+    return result
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clean_strings(states)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;Alabama&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Florida&#39;,
+ &#39;South Carolina&#39;,
+ &#39;West Virginia&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一個有用的方法,是將要做的動作寫成list,然後對你想修改的字串使用這些動作:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def remove_punctuation(value):
+    return re.sub(&#39;[!#?]&#39;, &#39;&#39;, value)
+
+clean_ops = [str.strip, remove_punctuation, str.title]
+
+def clean_strings(strings, ops):
+    result = []
+    for value in strings:
+        for function in ops:
+            value = function(value)
+        result.append(value)
+    return result
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clean_strings(states, clean_ops)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;Alabama&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Florida&#39;,
+ &#39;South Carolina&#39;,
+ &#39;West Virginia&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以將一個函式當作另一個函式的參數,例如內建的 map 函式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in map(remove_punctuation, states):
+    print(x)
+    
+map(remove_punctuation, states)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt; Alabama 
+Georgia
+Georgia
+georgia
+FlOrIda
+south carolina
+West virginia
+
+
+
+
+
+&amp;lt;map at 0x197a79d5b70&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;## 匿名函式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def short_function(x):
+    return x * 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;寫法同下 :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;equiv_anon = lambda x: x * 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;範例:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[8, 0, 2, 10, 12]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def apply_to_list(some_list, f):
+    return f(some_list)
+
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[4, 0, 1, 5, 6, 4, 0, 1, 5, 6]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我們也可以將lambda函式傳到list的sort方法中&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;strings = [&#39;foo&#39;, &#39;card&#39;, &#39;bar&#39;, &#39;aaaa&#39;, &#39;abab&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;strings.sort(key=lambda x: len(set(list(x))))
+
+strings
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generators-產生器-1&#34;&gt;Generators (產生器)&lt;/h2&gt;
+
+&lt;p&gt;Having a consistent way to iterate over sequences, like objects in a list or lines in a
+file, is an important Python feature. This is accomplished by means of the iterator
+protocol, a generic way to make objects iterable. For example, iterating over a dict
+yields the dict keys:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;some_dict = {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}
+
+for key in some_dict:
+    print(key)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;a
+b
+c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you write for key in some_dict, the Python interpreter first attempts to create
+an iterator out of some_dict:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dict_iterator = iter(some_dict)
+dict_iterator
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;dict_keyiterator at 0x197a7a520e8&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;An iterator is any object that will yield objects to the Python interpreter when used in
+a context like a for loop. Most methods expecting a list or list-like object will also
+accept any iterable object. This includes built-in methods such as min, max, and sum,
+and type constructors like list and tuple:&lt;/p&gt;
+
+&lt;p&gt;A generator is a concise way to construct a new iterable object. Whereas normal functions
+execute and return a single result at a time, generators return a sequence of
+multiple results lazily, pausing after each one until the next one is requested. To create
+a generator, use the yield keyword instead of return in a function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def squares(n=10):
+    print(&#39;Generating squares from 1 to {0}&#39;.format(n ** 2))
+    for i in range(1, n + 1):
+        yield i ** 2 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you actually call the generator, no code is immediately executed:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gen = squares()
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object squares at 0x00000197A7A68620&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is not until you request elements from the generator that it begins executing its
+code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in gen:
+    print(x, end=&#39; &#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Generating squares from 1 to 100
+1 4 9 16 25 36 49 64 81 100 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generator-expresssions-1&#34;&gt;Generator expresssions&lt;/h2&gt;
+
+&lt;p&gt;另一種製造產生器的簡單方法是利用Generator expresssions ,寫在小括號中:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gen = (i** 2 for i in range(100))
+
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x00000197A7A68B48&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上寫法完全等同於以下寫法:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def _make_gen():
+    for x in range(100):
+        yield x ** 2
+gen = _make_gen()
+
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object _make_gen at 0x00000197A7A685C8&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;可變動與不可變動型別&#34;&gt;可變動與不可變動型別:&lt;/h1&gt;
+
+&lt;p&gt;&lt;img alt=&#34;&#34; class=&#34;nm nn gp n o go x gm&#34; width=&#34;658&#34; height=&#34;308&#34; role=&#34;presentation&#34; src=&#34;https://miro.medium.com/max/823/1*uFlTNY4W3czywyU18zxl8w.png&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;重點&#34;&gt;重點&lt;/h2&gt;
+
+&lt;h2 id=&#34;1-mutable-type-使用-複製元素-元素各自獨立&#34;&gt;1. mutable type 使用 [:] 複製元素,元素各自獨立&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a = [1,2]
+c = [a[:] for x in range(2)]
+c[0][0] = 3
+c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 2], [1, 2]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;以下為錯誤示範&#34;&gt;以下為錯誤示範&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#錯誤
+a = [3,4]
+b = [a]*2
+a[1] = 8
+b
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 8], [3, 8]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#正確
+a = [3,4]
+c = [a[:]]*2
+a[1] = 8
+c
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 4], [3, 4]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;for-迴圈-與-串列&#34;&gt;for 迴圈 與 串列&lt;/h4&gt;
+
+&lt;h4 id=&#34;1-使用下標-透過len取得串列長度&#34;&gt;1.  使用下標：透過len取得串列長度&lt;/h4&gt;
+
+&lt;h4 id=&#34;2-直接取得元素&#34;&gt;2  直接取得元素&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#使用下標
+
+a = [5,8,7]
+for i in range( len(a)):
+    print(a[i])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;5
+8
+7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 直接取得元素
+a = [5,8,7]
+for x in a:
+    print(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;5
+8
+7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;for-迴圈更改串列元素&#34;&gt;for 迴圈更改串列元素&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a = [1,8,3]
+for i in range(len(a)):
+    a[i] += 10
+a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[11, 18, 13]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以下為錯誤用法 : 因為整數為immutable&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;## 錯誤示範
+
+a = [1,8,3]
+for x in a:
+    x += 10    
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 8, 3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;2-函式參數值的更改&#34;&gt;2. 函式參數值的更改&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;immutable 參數在函式內的更動會變換儲存位置,與原本傳入的變數脫離關係&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mutable 參數在函式內的更動不會變換儲存位置,會影響原傳入變數&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# a 為 immutable , b為 mutable
+def change_vals(a,b):
+print(a)
+a = 10            # a 另找空間儲存10, a與 foo脫離關係
+b.append(5)       # b 串列增加一個元素
+    
+foo , bar = 3, [4,9]
+
+#在函式內變更二參數資料
+
+change_vals(foo,bar)
+
+#foo 整數不變 , bar串列會變動
+
+print(foo , bar )    # A : foo =3 ,bar =[4,9,5]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;immutable 參數可透過函式回傳來變更&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def inc_one (s , t):
+s += 1
+t += 1
+return s,t
+
+a , b = 2,5
+a,b = inc_one(a,b)
+a,b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(3, 6)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;串列參數若指定到新串列,之後的設定不影響原傳入串列&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def change_lists(a,b):
+a =[3]                  # a 指定到新串列,與原傳入串列 foo 脫離關係
+b[0] = 5                # 修改 b[0] 元素
+
+foo , bar =[9], [2,7]
+
+change_lists(foo,bar)
+
+print(foo,bar)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;[9] [5, 7]&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;返回值-3&#34;&gt;返回值&lt;/h2&gt;
+
+&lt;p&gt;When creating a function using the def statement, you can specify what the return value should be with a return statement. A return statement consists of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The return keyword&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The value or expression that the function should return 函數要返回的值或表示式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+import random
+def getAnswer(answerNumber):
+if answerNumber == 1:
+    return &#39;It is certain&#39;
+elif answerNumber == 2:
+    return &#39;It is decidedly so&#39;
+elif answerNumber == 3:
+    return &#39;Yes&#39;
+elif answerNumber == 4:
+    return &#39;Reply hazy try again&#39;
+elif answerNumber == 5:
+    return &#39;Ask again later&#39;
+elif answerNumber == 6:
+    return &#39;Concentrate and ask again&#39;
+elif answerNumber == 7:
+    return &#39;My reply is no&#39;
+elif answerNumber == 8:
+    return &#39;Outlook not so good&#39;
+elif answerNumber == 9:
+    return &#39;Very doubtful&#39;
+
+r = random.randint(1, 9)
+fortune = getAnswer(r)
+print(fortune)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is decidedly so&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;# NONE 值&lt;/p&gt;
+
+&lt;p&gt;print 值 返回 None
+ 如同 r 的 side effect
+ 對於有沒有寫return陳述句的函數,python都會加上return None&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;spam = print(&#39;Hello!&#39;)
+None == spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Hello!
+
+
+
+
+
+True
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;區域變數不能使用在全域作用範圍內-3&#34;&gt;區域變數不能使用在全域作用範圍內&lt;/h2&gt;
+
+&lt;p&gt;(跟r一樣)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 31337
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;---------------------------------------------------------------------------
+
+NameError                                 Traceback (most recent call last)
+
+&amp;lt;ipython-input-8-c77831cffe5d&amp;gt; in &amp;lt;module&amp;gt;()
+      2     eggs = 31337
+      3 spam()
+----&amp;gt; 4 print(eggs)
+
+
+NameError: name &#39;eggs&#39; is not defined
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;local-scopes-cannot-use-variables-in-other-local-scopes-3&#34;&gt;Local Scopes Cannot Use Variables in Other Local Scopes&lt;/h2&gt;
+
+&lt;p&gt;The upshot is that local variables in one function are completely separate from the local variables in another function.&lt;/p&gt;
+
+&lt;p&gt;某個函式中的區域變數與其他函式中的區域變數是完全分開來的,就算名稱相同也完全不相干&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    eggs = 99
+    bacon()
+    print(eggs)
+def bacon():
+    ham = 101
+    eggs = 0
+    
+spam()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;99
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;gobal-陳述句-3&#34;&gt;gobal 陳述句&lt;/h2&gt;
+
+&lt;p&gt;If you need to modify a global variable from within a function, use the global statement. If you have a line such as global eggs at the top of a function, it tells Python, “In this function, eggs refers to the global variable, so don’t create a local variable with this name.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs
+    eggs = &#39;spam&#39;
+
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;There are four rules to tell whether a variable is in a local scope or global scope:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;If a variable is being used in the global scope (that is, outside of all functions), then it is always a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If there is a global statement for that variable in a function, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Otherwise, if the variable is used in an assignment statement in the function, it is a local variable.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;But if the variable is not used in an assignment statement, it is a global variable.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;for example:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam():
+    global eggs    
+    eggs = &#39;spam&#39; # this is the global
+def bacon():
+    eggs = &#39;bacon&#39; # this is a local
+def ham():
+    print(eggs) # this is the global
+eggs = 42 # this is the global
+spam()
+print(eggs)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;spam
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;In the spam() function, eggs is the global eggs variable, because there’s a global statement for eggs at the beginning of the function &lt;code&gt;1&lt;/code&gt;. In bacon(), eggs is a local variable, because there’s an assignment statement for it in that function &lt;code&gt;2&lt;/code&gt;. In ham() &lt;code&gt;3&lt;/code&gt;, eggs is the global variable, because there is no assignment statement or global statement for it in that function.&lt;/p&gt;
+
+&lt;h2 id=&#34;例外處理-3&#34;&gt;例外處理&lt;/h2&gt;
+
+&lt;p&gt;python 程式中若有錯誤(error),或例外(exception)導致整個程式當掉,而我們並不希望發生這樣的事&lt;/p&gt;
+
+&lt;p&gt;ｅｘ：［除以０］&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    return 42 / divideBy
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+
+
+
+---------------------------------------------------------------------------
+
+ZeroDivisionError                         Traceback (most recent call last)
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in &amp;lt;module&amp;gt;()
+      4 print(spam(2))
+      5 print(spam(12))
+----&amp;gt; 6 print(spam(0))
+      7 print(spam(1))
+
+
+&amp;lt;ipython-input-15-cce18d473349&amp;gt; in spam(divideBy)
+      1 def spam(divideBy):
+----&amp;gt; 2     return 42 / divideBy
+      3 
+      4 print(spam(2))
+      5 print(spam(12))
+
+
+ZeroDivisionError: division by zero
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;利用try和except陳述句來處理,把有可能出錯的陳述句放在try子句當中,&lt;/p&gt;
+
+&lt;p&gt;當錯誤發生時,程式的執行會跳到接下來的except子句起始處&lt;/p&gt;
+
+&lt;p&gt;把前面除以0的程式碼放在try子句中,而except子句中寫入程式碼來處理錯誤發生時想要做的事&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def spam(divideBy):
+    try:
+        return 42 / divideBy
+    except ZeroDivisionError:
+        print(&#39;Error: Invalid argument.&#39;)
+
+print(spam(2))
+print(spam(12))
+print(spam(0))
+print(spam(1))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;21.0
+3.5
+Error: Invalid argument.
+None
+42.0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;小型例子-猜數字遊戲-3&#34;&gt;小型例子 :猜數字遊戲&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# This is a guess the number game.
+import random
+secretNumber = random.randint(1, 20)
+print(&#39;I am thinking of a number between 1 and 20.&#39;)
+
+# Ask the player to guess 6 times.
+for guessesTaken in range(1, 7):
+    print(&#39;Take a guess.&#39;)
+    guess = int(input())
+
+    if guess &amp;lt; secretNumber:
+        print(&#39;Your guess is too low.&#39;)
+    elif guess &amp;gt; secretNumber:
+        print(&#39;Your guess is too high.&#39;)
+    else:
+        break    # This condition is the correct guess!
+
+if guess == secretNumber:
+    print(&#39;Good job! You guessed my number in &#39; + str(guessesTaken) + &#39; guesses!&#39;)
+else:
+    print(&#39;Nope. The number I was thinking of was &#39; + str(secretNumber))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;I am thinking of a number between 1 and 20.
+Take a guess.
+10
+Your guess is too high.
+Take a guess.
+1
+Your guess is too low.
+Take a guess.
+5
+Your guess is too low.
+Take a guess.
+8
+Your guess is too low.
+Take a guess.
+9
+Good job! You guessed my number in 5 guesses!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;多個回傳值-2&#34;&gt;多個回傳值&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def f():
+    a = 5
+    b = 6
+    c = 7
+    return a,b,c
+
+return_value = f()
+
+# return value 就是3-tuple
+return_value
+
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;(5, 6, 7)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一種方法回傳多個值,就是回傳dict:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def f():
+    a = 5
+    b = 6
+    c = 7
+    return{&#39;a&#39;: a ,&#39;b&#39;: b ,&#39;c&#39;: c}
+
+return_value = f()
+
+return_value
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;{&#39;a&#39;: 5, &#39;b&#39;: 6, &#39;c&#39;: 7}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;functions-are-objects-2&#34;&gt;Functions Are Objects&lt;/h2&gt;
+
+&lt;p&gt;假設我們要對以下字串list做一些清理和轉換的工作,像是去除空白,刪除標點符號,統一大小寫等&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;
+
+
+states = [&#39; Alabama &#39;, &#39;Georgia!&#39;, &#39;Georgia&#39;, &#39;georgia&#39;, &#39;FlOrIda&#39;,&#39;south carolina##&#39;, &#39;West virginia?&#39;]
+
+import re
+def clean_strings(strings):
+    result = []
+    for value in strings:
+        value = value.strip()                  #刪除空白
+        value = re.sub(&#39;[!#?]&#39;, &#39;&#39;, value)     #替換特殊符號
+        value = value.title()                  #title() 方法返回&amp;quot;标题化&amp;quot;的字符串,就是说所有单词都是以大写开始
+        result.append(value)
+    return result
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clean_strings(states)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;Alabama&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Florida&#39;,
+ &#39;South Carolina&#39;,
+ &#39;West Virginia&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;另一個有用的方法,是將要做的動作寫成list,然後對你想修改的字串使用這些動作:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def remove_punctuation(value):
+    return re.sub(&#39;[!#?]&#39;, &#39;&#39;, value)
+
+clean_ops = [str.strip, remove_punctuation, str.title]
+
+def clean_strings(strings, ops):
+    result = []
+    for value in strings:
+        for function in ops:
+            value = function(value)
+        result.append(value)
+    return result
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;clean_strings(states, clean_ops)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[&#39;Alabama&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Georgia&#39;,
+ &#39;Florida&#39;,
+ &#39;South Carolina&#39;,
+ &#39;West Virginia&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;你可以將一個函式當作另一個函式的參數,例如內建的 map 函式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in map(remove_punctuation, states):
+    print(x)
+    
+map(remove_punctuation, states)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt; Alabama 
+Georgia
+Georgia
+georgia
+FlOrIda
+south carolina
+West virginia
+
+
+
+
+
+&amp;lt;map at 0x197a79d5b70&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;## 匿名函式&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def short_function(x):
+    return x * 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;寫法同下 :&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;equiv_anon = lambda x: x * 2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;範例:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def apply_to_list(some_list, f):
+    return [f(x) for x in some_list]
+
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[8, 0, 2, 10, 12]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def apply_to_list(some_list, f):
+    return f(some_list)
+
+ints = [4, 0, 1, 5, 6]
+apply_to_list(ints, lambda x: x * 2)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[4, 0, 1, 5, 6, 4, 0, 1, 5, 6]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我們也可以將lambda函式傳到list的sort方法中&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;strings = [&#39;foo&#39;, &#39;card&#39;, &#39;bar&#39;, &#39;aaaa&#39;, &#39;abab&#39;]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;strings.sort(key=lambda x: len(set(list(x))))
+
+strings
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generators-產生器-2&#34;&gt;Generators (產生器)&lt;/h2&gt;
+
+&lt;p&gt;Having a consistent way to iterate over sequences, like objects in a list or lines in a
+file, is an important Python feature. This is accomplished by means of the iterator
+protocol, a generic way to make objects iterable. For example, iterating over a dict
+yields the dict keys:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;some_dict = {&#39;a&#39;: 1, &#39;b&#39;: 2, &#39;c&#39;: 3}
+
+for key in some_dict:
+    print(key)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;a
+b
+c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you write for key in some_dict, the Python interpreter first attempts to create
+an iterator out of some_dict:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;dict_iterator = iter(some_dict)
+dict_iterator
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;dict_keyiterator at 0x197a7a520e8&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;An iterator is any object that will yield objects to the Python interpreter when used in
+a context like a for loop. Most methods expecting a list or list-like object will also
+accept any iterable object. This includes built-in methods such as min, max, and sum,
+and type constructors like list and tuple:&lt;/p&gt;
+
+&lt;p&gt;A generator is a concise way to construct a new iterable object. Whereas normal functions
+execute and return a single result at a time, generators return a sequence of
+multiple results lazily, pausing after each one until the next one is requested. To create
+a generator, use the yield keyword instead of return in a function:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def squares(n=10):
+    print(&#39;Generating squares from 1 to {0}&#39;.format(n ** 2))
+    for i in range(1, n + 1):
+        yield i ** 2 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you actually call the generator, no code is immediately executed:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gen = squares()
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object squares at 0x00000197A7A68620&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It is not until you request elements from the generator that it begins executing its
+code:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;for x in gen:
+    print(x, end=&#39; &#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;Generating squares from 1 to 100
+1 4 9 16 25 36 49 64 81 100 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;generator-expresssions-2&#34;&gt;Generator expresssions&lt;/h2&gt;
+
+&lt;p&gt;另一種製造產生器的簡單方法是利用Generator expresssions ,寫在小括號中:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;gen = (i** 2 for i in range(100))
+
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object &amp;lt;genexpr&amp;gt; at 0x00000197A7A68B48&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以上寫法完全等同於以下寫法:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def _make_gen():
+    for x in range(100):
+        yield x ** 2
+gen = _make_gen()
+
+gen
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;generator object _make_gen at 0x00000197A7A685C8&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;可變動與不可變動型別-1&#34;&gt;可變動與不可變動型別:&lt;/h1&gt;
+
+&lt;p&gt;&lt;img alt=&#34;&#34; class=&#34;nm nn gp n o go x gm&#34; width=&#34;658&#34; height=&#34;308&#34; role=&#34;presentation&#34; src=&#34;https://miro.medium.com/max/823/1*uFlTNY4W3czywyU18zxl8w.png&#34;&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;重點-1&#34;&gt;重點&lt;/h2&gt;
+
+&lt;h2 id=&#34;1-mutable-type-使用-複製元素-元素各自獨立-1&#34;&gt;1. mutable type 使用 [:] 複製元素,元素各自獨立&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a = [1,2]
+c = [a[:] for x in range(2)]
+c[0][0] = 3
+c
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 2], [1, 2]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;以下為錯誤示範-1&#34;&gt;以下為錯誤示範&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#錯誤
+a = [3,4]
+b = [a]*2
+a[1] = 8
+b
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 8], [3, 8]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#正確
+a = [3,4]
+c = [a[:]]*2
+a[1] = 8
+c
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[[3, 4], [3, 4]]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h4 id=&#34;for-迴圈-與-串列-1&#34;&gt;for 迴圈 與 串列&lt;/h4&gt;
+
+&lt;h4 id=&#34;1-使用下標-透過len取得串列長度-1&#34;&gt;1.  使用下標：透過len取得串列長度&lt;/h4&gt;
+
+&lt;h4 id=&#34;2-直接取得元素-1&#34;&gt;2  直接取得元素&lt;/h4&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;#使用下標
+
+a = [5,8,7]
+for i in range( len(a)):
+    print(a[i])
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;5
+8
+7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# 直接取得元素
+a = [5,8,7]
+for x in a:
+    print(x)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;5
+8
+7
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3 id=&#34;for-迴圈更改串列元素-1&#34;&gt;for 迴圈更改串列元素&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;a = [1,8,3]
+for i in range(len(a)):
+    a[i] += 10
+a
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[11, 18, 13]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;以下為錯誤用法 : 因為整數為immutable&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;## 錯誤示範
+
+a = [1,8,3]
+for x in a:
+    x += 10    
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;[1, 8, 3]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;2-函式參數值的更改-1&#34;&gt;2. 函式參數值的更改&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;immutable 參數在函式內的更動會變換儲存位置,與原本傳入的變數脫離關係&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;mutable 參數在函式內的更動不會變換儲存位置,會影響原傳入變數&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;# a 為 immutable , b為 mutable
+def change_vals(a,b):
+print(a)
+a = 10            # a 另找空間儲存10, a與 foo脫離關係
+b.append(5)       # b 串列增加一個元素
+    
+foo , bar = 3, [4,9]
+
+#在函式內變更二參數資料
+
+change_vals(foo,bar)
+
+#foo 整數不變 , bar串列會變動
+
+print(foo , bar )    # A : foo =3 ,bar =[4,9,5]
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;immutable 參數可透過函式回傳來變更&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def inc_one (s , t):
+s += 1
+t += 1
+return s,t
+
+a , b = 2,5
+a,b = inc_one(a,b)
+a,b
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(3, 6)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;串列參數若指定到新串列,之後的設定不影響原傳入串列&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;def change_lists(a,b):
+a =[3]                  # a 指定到新串列,與原傳入串列 foo 脫離關係
+b[0] = 5                # 修改 b[0] 元素
+
+foo , bar =[9], [2,7]
+
+change_lists(foo,bar)
+
+print(foo,bar)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;[9] [5, 7]&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 </description>
     </item>
     
@@ -915,11 +2225,11 @@ gen
 &lt;p&gt;A &lt;strong&gt;functional&lt;/strong&gt; is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise &amp;lt;- function(f) f(runif(1e3))
 randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4894349&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.4974798&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.4964951&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.497734&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;randomise(sum)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 495.7516&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 482.9231&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This chapter will focus on functionals provided by the purrr package&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(purrr)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;triple &amp;lt;- function(x) x * 3
@@ -971,9 +2281,9 @@ map_dbl(mtcars, mean)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:3, ~runif(2))
 str(x)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## List of 3
-##  $ : num [1:2] 0.2211 0.0337
-##  $ : num [1:2] 0.369 0.287
-##  $ : num [1:2] 0.0272 0.9725&lt;/code&gt;&lt;/pre&gt;
+##  $ : num [1:2] 0.255 0.405
+##  $ : num [1:2] 0.53 0.87
+##  $ : num [1:2] 0.184 0.742&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The map functions for extracting elements from a vector , You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position.These are very useful for working with deeply nested lists, which often arise when working with JSON.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- list(
   list(-1, x = 1, y = c(2), z = &amp;quot;a&amp;quot;),
@@ -1029,9 +2339,9 @@ map_dbl(Y, ~ mean(.x, na.rm = TRUE))&lt;/code&gt;&lt;/pre&gt;
 
 x &amp;lt;- c(1, 2, 3, 4)
 map_dbl(x, plus, runif(1))# runif(1) 只使用一次的結果&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.445632 2.445632 3.445632 4.445632&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.396877 2.396877 3.396877 4.396877&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(x, ~ plus(.x, runif(1))) #x長度4,所以使用4次runif(1)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 1.025649 2.922708 3.992710 4.717867&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.545423 2.318382 3.612140 4.498758&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;varying-another-argument&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Varying another argument&lt;/h2&gt;
@@ -1044,10 +2354,10 @@ x &amp;lt;- rcauchy(1000)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;The simplest technique is to use an anonymous function to rearrange the argument order:&lt;/li&gt;
 &lt;/ul&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(trims, ~ mean(x, trim = .x))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  0.960622574  0.029671574  0.001638664 -0.020945315&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1.3021079069  0.0215750589  0.0001209798 -0.0254269932&lt;/code&gt;&lt;/pre&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#or
 map_dbl(trims, function(trim) mean(x, trim = trim))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  0.960622574  0.029671574  0.001638664 -0.020945315&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1.3021079069  0.0215750589  0.0001209798 -0.0254269932&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div id=&#34;purrr-style&#34; class=&#34;section level2&#34;&gt;
 &lt;h2&gt;Purrr style&lt;/h2&gt;
@@ -1212,21 +2522,21 @@ xs[[1]][[1]] &amp;lt;- NA
 ws &amp;lt;- map(1:8, ~ rpois(10, 5) + 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You can use map_dbl() to compute the unweighted means:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.4780495 0.5701731 0.5007448 0.5156092 0.6296819 0.3585777
-## [8] 0.5951598&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.4735406 0.5522280 0.4987651 0.4513182 0.5738734 0.6162289
+## [8] 0.4248625&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;But passing ws as an additional argument doesn’t work because arguments after &lt;code&gt;.f&lt;/code&gt;are not transformed:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map_dbl(xs, weighted.mean, w = ws)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## Error in weighted.mean.default(.x[[i]], ...): &amp;#39;x&amp;#39; and &amp;#39;w&amp;#39; must have the same length&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/a468c847ea8aca9a6131492e1e7431f418259eaf/ce4e0/diagrams/functionals/map-arg-recycle.png&#34; width=&#34;345&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;We need a new tool: a &lt;code&gt;map2()&lt;/code&gt;, which is vectorised over two arguments. This means both &lt;code&gt;.x&lt;/code&gt; and &lt;code&gt;.y&lt;/code&gt; are varied in each call to &lt;code&gt;.f&lt;/code&gt;:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]        NA 0.4752996 0.6060122 0.4928139 0.5276391 0.6660654 0.3885848
-## [8] 0.6096117&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]        NA 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
+## [8] 0.4188955&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/f5cddf51ec9c243a7c13732b0ce46b0868bf8a31/501a8/diagrams/functionals/map2.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;The arguments to &lt;code&gt;map2()&lt;/code&gt; are slightly different to the arguments to &lt;code&gt;map()&lt;/code&gt; as two vectors come before the function, rather than one. Additional arguments still go afterwards:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5563665 0.4752996 0.6060122 0.4928139 0.5276391 0.6660654 0.3885848
-## [8] 0.6096117&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.6039540 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
+## [8] 0.4188955&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/7a545699ff7069a98329fcfbe6e42b734507eb16/211a5/diagrams/functionals/map2-arg.png&#34; width=&#34;453&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;One of the big differences between map2() and the simple function above is that map2() recycles its inputs to make sure that they’re the same length:&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/55032525ec77409e381dcd200a47e1787e65b964/dcaef/diagrams/functionals/map2-recycle.png&#34; width=&#34;368&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
@@ -1310,9 +2620,9 @@ The first form is analogous to the &lt;code&gt;map()&lt;/code&gt; family. The se
 &lt;p&gt;If the vector is unnamed, the second argument will be the index:&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- map(1:6, ~ sample(1000, 10))
 imap_chr(x, ~ paste0(&amp;quot;The highest value of &amp;quot;, .y, &amp;quot; is &amp;quot;, max(.x)))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 876&amp;quot; &amp;quot;The highest value of 2 is 938&amp;quot;
-## [3] &amp;quot;The highest value of 3 is 892&amp;quot; &amp;quot;The highest value of 4 is 997&amp;quot;
-## [5] &amp;quot;The highest value of 5 is 917&amp;quot; &amp;quot;The highest value of 6 is 902&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The highest value of 1 is 836&amp;quot; &amp;quot;The highest value of 2 is 993&amp;quot;
+## [3] &amp;quot;The highest value of 3 is 977&amp;quot; &amp;quot;The highest value of 4 is 943&amp;quot;
+## [5] &amp;quot;The highest value of 5 is 974&amp;quot; &amp;quot;The highest value of 6 is 976&amp;quot;&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;
 &lt;code&gt;imap()&lt;/code&gt; is a useful helper if you want to work with the values in a vector along with their positions.
 &lt;/p&gt;
@@ -1325,14 +2635,14 @@ Since we have &lt;code&gt;map()&lt;/code&gt; and &lt;code&gt;map2()&lt;/code&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png&#34; width=&#34;354&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;As before, the varying arguments come before .f (although now they must be wrapped in a list), and the constant arguments come afterwards.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pmap_dbl(list(xs, ws), weighted.mean, na.rm = TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.5563665 0.4752996 0.6060122 0.4928139 0.5276391 0.6660654 0.3885848
-## [8] 0.6096117&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 0.6039540 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
+## [8] 0.4188955&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;A big difference between pmap() and the other map functions is that pmap() gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section 9.2.5, where we wanted to vary the trim argument to x, we could instead use pmap():&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;trims &amp;lt;- c(0, 0.1, 0.2, 0.5)
 x &amp;lt;- rcauchy(1000)
 
 pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1]  0.498207663 -0.004468084 -0.007573946 -0.012760903&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 1.00884920 0.11850424 0.09614859 0.07941528&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I think it’s good practice to name the components of the list to make it very clear how the function will be called.&lt;/p&gt;
 &lt;p&gt;It’s often convenient to call pmap() with a data frame. A handy way to create that data frame is with tibble::tribble(), which allows you to describe a data frame row-by-row&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;params &amp;lt;- tibble::tribble(
@@ -1344,13 +2654,13 @@ pmap_dbl(list(trim = trims), mean, x = x)&lt;/code&gt;&lt;/pre&gt;
 
 pmap(params, runif)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;## [[1]]
-## [1] 0.9972735
+## [1] 0.3062823
 ## 
 ## [[2]]
-## [1] 68.11416 35.02909
+## [1] 75.37836 86.05613
 ## 
 ## [[3]]
-## [1] 531.0483 812.8220 211.6422&lt;/code&gt;&lt;/pre&gt;
+## [1] 102.2756 206.0987 581.7114&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;https://d33wubrfki0l68.cloudfront.net/e698354d802ce16f83546db63c45a19b8d51f45e/43de7/diagrams/functionals/pmap-3.png&#34; width=&#34;449&#34; style=&#34;display: block; margin: auto;&#34;&gt;&lt;/p&gt;
 &lt;p&gt;Here, the column names are critical: I’ve carefully chosen to match them to the arguments to runif(), so the pmap(params, runif) is equivalent to runif(n = 1L, min = 0, max = 1), runif(n = 2, min = 10, max = 100), runif(n = 3L, min = 100, max = 1000). (If you have a data frame in hand, and the names don’t match, use dplyr::rename() or similar.)&lt;/p&gt;
 &lt;/div&gt;
