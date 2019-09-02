@@ -42,7 +42,8 @@ os.getcwd()
 
 ## 建立新的資料夾
 ```{python}
-os.makedirs('C:\\delicious\\walnut\\waffle')
+1+1
+#os.makedirs('C:\\delicious\\walnut\\waffle')
 ```
 
 ## os.path 模組 

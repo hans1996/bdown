@@ -30,7 +30,7 @@
   
   <meta name="description" content="Content comes from https://adv-r.hadley.nz/
 IntroductionA functional is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.
-randomise &lt;- function(f) f(runif(1e3))randomise(mean)## [1] 0.4974798randomise(mean)## [1] 0.497734randomise(sum)## [1] 482.9231This chapter will focus on functionals provided by the purrr package
+randomise &lt;- function(f) f(runif(1e3))randomise(mean)## [1] 0.4916487randomise(mean)## [1] 0.4962513randomise(sum)## [1] 494.0721This chapter will focus on functionals provided by the purrr package
 library(purrr)triple &lt;- function(x) x * 3map(1:3, triple)## [[1]]## [1] 3## ## [[2]]## [1] 6## ## [[3]]## [1] 9如下圖: map function 回傳 list">
 
   
@@ -118,7 +118,7 @@ library(purrr)triple &lt;- function(x) x * 3map(1:3, triple)## [[1]]## [1] 3
   <meta property="og:title" content="Note-functional | Math">
   <meta property="og:description" content="Content comes from https://adv-r.hadley.nz/
 IntroductionA functional is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.
-randomise &lt;- function(f) f(runif(1e3))randomise(mean)## [1] 0.4974798randomise(mean)## [1] 0.497734randomise(sum)## [1] 482.9231This chapter will focus on functionals provided by the purrr package
+randomise &lt;- function(f) f(runif(1e3))randomise(mean)## [1] 0.4916487randomise(mean)## [1] 0.4962513randomise(sum)## [1] 494.0721This chapter will focus on functionals provided by the purrr package
 library(purrr)triple &lt;- function(x) x * 3map(1:3, triple)## [[1]]## [1] 3## ## [[2]]## [1] 6## ## [[3]]## [1] 9如下圖: map function 回傳 list"><meta property="og:image" content="/img/icon-192.png">
   <meta property="twitter:image" content="/img/icon-192.png"><meta property="og:locale" content="en-us">
   
@@ -532,11 +532,11 @@ library(purrr)triple &lt;- function(x) x * 3map(1:3, triple)## [[1]]## [1] 3
 <p>A <strong>functional</strong> is a function that takes a function as an input and returns a vector as output. Here’s a simple functional: it calls the function provided as input with 1000 random uniform numbers.</p>
 <pre class="r"><code>randomise &lt;- function(f) f(runif(1e3))
 randomise(mean)</code></pre>
-<pre><code>## [1] 0.4974798</code></pre>
+<pre><code>## [1] 0.4916487</code></pre>
 <pre class="r"><code>randomise(mean)</code></pre>
-<pre><code>## [1] 0.497734</code></pre>
+<pre><code>## [1] 0.4962513</code></pre>
 <pre class="r"><code>randomise(sum)</code></pre>
-<pre><code>## [1] 482.9231</code></pre>
+<pre><code>## [1] 494.0721</code></pre>
 <p>This chapter will focus on functionals provided by the purrr package</p>
 <pre class="r"><code>library(purrr)</code></pre>
 <pre class="r"><code>triple &lt;- function(x) x * 3
@@ -588,9 +588,9 @@ map_dbl(mtcars, mean)</code></pre>
 <pre class="r"><code>x &lt;- map(1:3, ~runif(2))
 str(x)</code></pre>
 <pre><code>## List of 3
-##  $ : num [1:2] 0.255 0.405
-##  $ : num [1:2] 0.53 0.87
-##  $ : num [1:2] 0.184 0.742</code></pre>
+##  $ : num [1:2] 0.571 0.815
+##  $ : num [1:2] 0.356 0.153
+##  $ : num [1:2] 0.909 0.385</code></pre>
 <p>The map functions for extracting elements from a vector , You can use a character vector to select elements by name, an integer vector to select by position, or a list to select by both name and position.These are very useful for working with deeply nested lists, which often arise when working with JSON.</p>
 <pre class="r"><code>x &lt;- list(
   list(-1, x = 1, y = c(2), z = &quot;a&quot;),
@@ -646,9 +646,9 @@ map_dbl(Y, ~ mean(.x, na.rm = TRUE))</code></pre>
 
 x &lt;- c(1, 2, 3, 4)
 map_dbl(x, plus, runif(1))# runif(1) 只使用一次的結果</code></pre>
-<pre><code>## [1] 1.396877 2.396877 3.396877 4.396877</code></pre>
+<pre><code>## [1] 1.868745 2.868745 3.868745 4.868745</code></pre>
 <pre class="r"><code>map_dbl(x, ~ plus(.x, runif(1))) #x長度4,所以使用4次runif(1)</code></pre>
-<pre><code>## [1] 1.545423 2.318382 3.612140 4.498758</code></pre>
+<pre><code>## [1] 1.280945 2.089418 3.053643 4.575404</code></pre>
 </div>
 <div id="varying-another-argument" class="section level2">
 <h2>Varying another argument</h2>
@@ -661,10 +661,10 @@ x &lt;- rcauchy(1000)</code></pre>
 <li>The simplest technique is to use an anonymous function to rearrange the argument order:</li>
 </ul>
 <pre class="r"><code>map_dbl(trims, ~ mean(x, trim = .x))</code></pre>
-<pre><code>## [1]  1.3021079069  0.0215750589  0.0001209798 -0.0254269932</code></pre>
+<pre><code>## [1]  0.02602539 -0.02371783 -0.01273051 -0.02817497</code></pre>
 <pre class="r"><code>#or
 map_dbl(trims, function(trim) mean(x, trim = trim))</code></pre>
-<pre><code>## [1]  1.3021079069  0.0215750589  0.0001209798 -0.0254269932</code></pre>
+<pre><code>## [1]  0.02602539 -0.02371783 -0.01273051 -0.02817497</code></pre>
 </div>
 <div id="purrr-style" class="section level2">
 <h2>Purrr style</h2>
@@ -829,21 +829,21 @@ xs[[1]][[1]] &lt;- NA
 ws &lt;- map(1:8, ~ rpois(10, 5) + 1)</code></pre>
 <p>You can use map_dbl() to compute the unweighted means:</p>
 <pre class="r"><code>map_dbl(xs, mean)</code></pre>
-<pre><code>## [1]        NA 0.4735406 0.5522280 0.4987651 0.4513182 0.5738734 0.6162289
-## [8] 0.4248625</code></pre>
+<pre><code>## [1]        NA 0.5158276 0.5900633 0.4635794 0.4517843 0.6939639 0.4917745
+## [8] 0.4680941</code></pre>
 <p>But passing ws as an additional argument doesn’t work because arguments after <code>.f</code>are not transformed:</p>
 <pre class="r"><code>map_dbl(xs, weighted.mean, w = ws)</code></pre>
 <pre><code>## Error in weighted.mean.default(.x[[i]], ...): &#39;x&#39; and &#39;w&#39; must have the same length</code></pre>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/a468c847ea8aca9a6131492e1e7431f418259eaf/ce4e0/diagrams/functionals/map-arg-recycle.png" width="345" style="display: block; margin: auto;"></p>
 <p>We need a new tool: a <code>map2()</code>, which is vectorised over two arguments. This means both <code>.x</code> and <code>.y</code> are varied in each call to <code>.f</code>:</p>
 <pre class="r"><code>map2_dbl(xs, ws, weighted.mean)</code></pre>
-<pre><code>## [1]        NA 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
-## [8] 0.4188955</code></pre>
+<pre><code>## [1]        NA 0.5513668 0.6491882 0.5108453 0.4285018 0.7153160 0.5383491
+## [8] 0.4303897</code></pre>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/f5cddf51ec9c243a7c13732b0ce46b0868bf8a31/501a8/diagrams/functionals/map2.png" width="368" style="display: block; margin: auto;"></p>
 <p>The arguments to <code>map2()</code> are slightly different to the arguments to <code>map()</code> as two vectors come before the function, rather than one. Additional arguments still go afterwards:</p>
 <pre class="r"><code>map2_dbl(xs, ws, weighted.mean, na.rm = TRUE)</code></pre>
-<pre><code>## [1] 0.6039540 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
-## [8] 0.4188955</code></pre>
+<pre><code>## [1] 0.5163370 0.5513668 0.6491882 0.5108453 0.4285018 0.7153160 0.5383491
+## [8] 0.4303897</code></pre>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/7a545699ff7069a98329fcfbe6e42b734507eb16/211a5/diagrams/functionals/map2-arg.png" width="453" style="display: block; margin: auto;"></p>
 <p>One of the big differences between map2() and the simple function above is that map2() recycles its inputs to make sure that they’re the same length:</p>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/55032525ec77409e381dcd200a47e1787e65b964/dcaef/diagrams/functionals/map2-recycle.png" width="368" style="display: block; margin: auto;"></p>
@@ -927,9 +927,9 @@ The first form is analogous to the <code>map()</code> family. The second and thi
 <p>If the vector is unnamed, the second argument will be the index:</p>
 <pre class="r"><code>x &lt;- map(1:6, ~ sample(1000, 10))
 imap_chr(x, ~ paste0(&quot;The highest value of &quot;, .y, &quot; is &quot;, max(.x)))</code></pre>
-<pre><code>## [1] &quot;The highest value of 1 is 836&quot; &quot;The highest value of 2 is 993&quot;
-## [3] &quot;The highest value of 3 is 977&quot; &quot;The highest value of 4 is 943&quot;
-## [5] &quot;The highest value of 5 is 974&quot; &quot;The highest value of 6 is 976&quot;</code></pre>
+<pre><code>## [1] &quot;The highest value of 1 is 855&quot; &quot;The highest value of 2 is 977&quot;
+## [3] &quot;The highest value of 3 is 930&quot; &quot;The highest value of 4 is 855&quot;
+## [5] &quot;The highest value of 5 is 980&quot; &quot;The highest value of 6 is 928&quot;</code></pre>
 <p>
 <code>imap()</code> is a useful helper if you want to work with the values in a vector along with their positions.
 </p>
@@ -942,14 +942,14 @@ Since we have <code>map()</code> and <code>map2()</code>, you might expect <code
 <p><img src="https://d33wubrfki0l68.cloudfront.net/e426c5755e2e65bdcc073d387775db79791f32fd/92902/diagrams/functionals/pmap.png" width="354" style="display: block; margin: auto;"></p>
 <p>As before, the varying arguments come before .f (although now they must be wrapped in a list), and the constant arguments come afterwards.</p>
 <pre class="r"><code>pmap_dbl(list(xs, ws), weighted.mean, na.rm = TRUE)</code></pre>
-<pre><code>## [1] 0.6039540 0.4525755 0.5744956 0.4594282 0.4420551 0.5788624 0.6072459
-## [8] 0.4188955</code></pre>
+<pre><code>## [1] 0.5163370 0.5513668 0.6491882 0.5108453 0.4285018 0.7153160 0.5383491
+## [8] 0.4303897</code></pre>
 <p>A big difference between pmap() and the other map functions is that pmap() gives you much finer control over argument matching because you can name the components of the list. Returning to our example from Section 9.2.5, where we wanted to vary the trim argument to x, we could instead use pmap():</p>
 <pre class="r"><code>trims &lt;- c(0, 0.1, 0.2, 0.5)
 x &lt;- rcauchy(1000)
 
 pmap_dbl(list(trim = trims), mean, x = x)</code></pre>
-<pre><code>## [1] 1.00884920 0.11850424 0.09614859 0.07941528</code></pre>
+<pre><code>## [1]  0.399274953 -0.017210836  0.009036891  0.034765922</code></pre>
 <p>I think it’s good practice to name the components of the list to make it very clear how the function will be called.</p>
 <p>It’s often convenient to call pmap() with a data frame. A handy way to create that data frame is with tibble::tribble(), which allows you to describe a data frame row-by-row</p>
 <pre class="r"><code>params &lt;- tibble::tribble(
@@ -961,13 +961,13 @@ pmap_dbl(list(trim = trims), mean, x = x)</code></pre>
 
 pmap(params, runif)</code></pre>
 <pre><code>## [[1]]
-## [1] 0.3062823
+## [1] 0.227754
 ## 
 ## [[2]]
-## [1] 75.37836 86.05613
+## [1] 35.44222 72.86013
 ## 
 ## [[3]]
-## [1] 102.2756 206.0987 581.7114</code></pre>
+## [1] 514.5174 926.9396 684.6923</code></pre>
 <p><img src="https://d33wubrfki0l68.cloudfront.net/e698354d802ce16f83546db63c45a19b8d51f45e/43de7/diagrams/functionals/pmap-3.png" width="449" style="display: block; margin: auto;"></p>
 <p>Here, the column names are critical: I’ve carefully chosen to match them to the arguments to runif(), so the pmap(params, runif) is equivalent to runif(n = 1L, min = 0, max = 1), runif(n = 2, min = 10, max = 100), runif(n = 3L, min = 100, max = 1000). (If you have a data frame in hand, and the names don’t match, use dplyr::rename() or similar.)</p>
 </div>
